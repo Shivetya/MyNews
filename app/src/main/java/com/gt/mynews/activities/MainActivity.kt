@@ -2,6 +2,7 @@ package com.gt.mynews.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         this.configureToolbar()
-        this.configurePager();
+        this.configurePagerAndTabs()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -31,10 +32,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    private fun configurePager(){
+    private fun configurePagerAndTabs(){
 
         val viewPager = findViewById<ViewPager>(R.id.activity_main_view_pager)
-
         viewPager.adapter = PageAdapter(supportFragmentManager)
+
+        val tabLayout = findViewById<TabLayout>(R.id.activity_main_tabs)
+
+        tabLayout.setupWithViewPager(viewPager)
+        tabLayout.tabMode = TabLayout.MODE_FIXED
     }
 }

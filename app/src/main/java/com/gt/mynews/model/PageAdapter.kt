@@ -15,4 +15,14 @@ class PageAdapter(private val fragmentManager : FragmentManager) : FragmentState
         return 4
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        return when(position){
+            0 -> "Top Stories"
+            1 -> "Most Popular"
+            2 -> "Science"
+            3 -> "Technology"
+            else -> "Mysterious tab"
+        }
+    }
+
 }
