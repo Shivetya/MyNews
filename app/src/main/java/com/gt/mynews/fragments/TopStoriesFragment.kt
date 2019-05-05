@@ -16,7 +16,7 @@ import com.gt.mynews.R
 class TopStoriesFragment : Fragment() {
 
     companion object{
-        fun newInstance() = TopStoriesFragment
+        fun newInstance() : TopStoriesFragment = TopStoriesFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

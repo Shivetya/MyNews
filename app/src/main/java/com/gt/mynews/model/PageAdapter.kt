@@ -3,12 +3,19 @@ package com.gt.mynews.model
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.gt.mynews.fragments.PagerFragment
+import com.gt.mynews.fragments.*
 
-class PageAdapter(private val fragmentManager : FragmentManager) : FragmentStatePagerAdapter(fragmentManager){
+class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter(fragmentManager){
 
     override fun getItem(position: Int): Fragment {
-        return PagerFragment.newInstance(position)
+        return when(position){
+            0 -> TopStoriesFragment.newInstance()
+            1 -> MostPopularFragment.newInstance()
+            2 -> ScienceFragment.newInstance()
+            3 -> TechnologyFragment.newInstance()
+            else -> TopStoriesFragment.newInstance()
+        }
+
     }
 
     override fun getCount(): Int {
