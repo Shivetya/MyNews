@@ -19,7 +19,7 @@ class PagerFragment : Fragment() {
 
     companion object {
 
-        private val KEY_POSITION = "position"
+        private const val KEY_POSITION = "position"
 
         fun newInstance(position: Int): PagerFragment {
 
