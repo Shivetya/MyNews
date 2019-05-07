@@ -1,4 +1,4 @@
-package com.gt.mynews.activities
+package com.gt.mynews.views.activities
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 import com.gt.mynews.R
-import com.gt.mynews.model.PageAdapter
+import com.gt.mynews.views.PageAdapter
 
 class MainActivity : AppCompatActivity() {
 

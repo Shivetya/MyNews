@@ -1,27 +1,24 @@
-package com.gt.mynews.model
+package com.gt.mynews.views
 
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.gt.mynews.fragments.*
+import com.gt.mynews.views.fragments.*
 
 class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter(fragmentManager){
 
-    override fun getItem(position: Int): Fragment {
-        return when(position){
-            0 -> TopStoriesFragment.newInstance()
-            1 -> MostPopularFragment.newInstance()
-            2 -> ScienceFragment.newInstance()
-            3 -> TechnologyFragment.newInstance()
-            else -> TopStoriesFragment.newInstance()
-        }
+    private val fragments = listOf(
+            TopStoriesFragment.newInstance(),
+            MostPopularFragment.newInstance(),
+            GenericSearchFragment.newInstance("science"),
+            GenericSearchFragment.newInstance("technology")
 
-    }
+    )
 
-    override fun getCount(): Int {
-        return 4
-    }
+    override fun getItem(position: Int): Fragment = fragments[position]
+
+    override fun getCount(): Int = fragments.size
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position){
