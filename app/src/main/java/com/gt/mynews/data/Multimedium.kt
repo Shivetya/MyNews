@@ -38,5 +38,10 @@ class Multimedium {
     @SerializedName("crop_name")
     @Expose
     var cropName: String? = null
-
+    @SerializedName("format")
+    @Expose
+    var format: String? = null
+    @SerializedName("copyright")
+    @Expose
+    var copyright: String? = null
 }

@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 import com.gt.mynews.R
-import com.gt.mynews.views.PageAdapter
+import com.gt.mynews.views.adapters.PageAdapter
 
 class MainActivity : AppCompatActivity() {
 

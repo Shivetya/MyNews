@@ -1,4 +1,4 @@
-package com.gt.mynews.views
+package com.gt.mynews.views.adapters
 
 
 import androidx.fragment.app.Fragment

@@ -1,6 +1,6 @@
 package com.gt.mynews.usecases
 
-import com.gt.mynews.data.ArticleApiResponse
+import com.gt.mynews.data.ArticleApiResponseS
 
 import retrofit2.Call
 import retrofit2.http.GET
@@ -8,14 +8,14 @@ import retrofit2.http.GET
 interface NytApi {
 
     @GET("/svc/mostpopular/v2/viewed/7.json")
-    fun getMostPopularApi() : Call<ArticleApiResponse>
+    fun getMostPopularApi() : Call<ArticleApiResponseS>
 
     @GET("/svc/topstories/v2/home.json")
-    fun getTopStoriesApi() : Call<ArticleApiResponse>
+    fun getTopStoriesApi() : Call<ArticleApiResponseS>
 
     @GET("/svc/topstories/v2/science.json")
-    fun getScienceApi() : Call<ArticleApiResponse>
+    fun getScienceApi() : Call<ArticleApiResponseS>
 
     @GET("/svc/topstories/v2/technology.json")
-    fun getTechnologyApi() : Call<ArticleApiResponse>
+    fun getTechnologyApi() : Call<ArticleApiResponseS>
 }
