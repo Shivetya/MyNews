@@ -1,24 +1,69 @@
 package com.gt.mynews.usecases
 
 import com.gt.mynews.data.ArticleApiResponse
+import com.gt.mynews.utils.ApiKeyGitIgnore
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class NytUseCaseImpl : NytUseCase {
 
+    companion object{
 
+        private const val APIKEY_NAME = "api-key"
+        private const val APIKEY_VALUE = ApiKeyGitIgnore.apiKey
 
-    override fun getMostPopular(): ArticleApiResponse {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        private var serviceMP : NytApi
+        private var serviceS : NytApi
+        private var serviceTS : NytApi
+
+        init {
+
+            val apiKeyInterceptor = Interceptor{chain ->
+                var request = chain.request()
+                val url = request.url()
+                        .newBuilder()
+                        .addQueryParameter(APIKEY_NAME, APIKEY_VALUE)
+                        .build()
+                request = request.newBuilder().url(url).build()
+                chain.proceed(request)
+            }
+
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+            val client = OkHttpClient.Builder()
+                    .addInterceptor(apiKeyInterceptor)
+                    .addInterceptor(loggingInterceptor)
+                    .build()
+
+            val retrofit = Retrofit.Builder()
+                    .baseUrl("https://api.nytimes.com/")
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+
+            serviceMP = retrofit.create(NytApi::class.java)
+            serviceS = retrofit.create(NytApi::class.java)
+            serviceTS = retrofit.create(NytApi::class.java)
+        }
     }
 
-    override fun getTopStories(): ArticleApiResponse {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getMostPopular(): ArticleApiResponse? {
+        return serviceMP.getMostPopularApi().execute().body()
     }
 
-    override fun getScience(): ArticleApiResponse {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getTopStories(): ArticleApiResponse? {
+        return serviceTS.getTopStoriesApi().execute().body()
     }
 
-    override fun getTechnology(): ArticleApiResponse {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getScience(): ArticleApiResponse? {
+        return serviceTS.getScienceApi().execute().body()
+    }
+
+    override fun getTechnology(): ArticleApiResponse? {
+        return serviceTS.getTechnologyApi().execute().body()
     }
 }
