@@ -1,12 +1,12 @@
 package com.gt.mynews.usecases
 
-import com.gt.mynews.data.ArticleApiResponseS
+import com.gt.mynews.data.ArticleApiResponse
 
 interface NytUseCase{
 
-    fun getMostPopular() : ArticleApiResponseS
-    fun getTopStories() : ArticleApiResponseS
-    fun getScience() : ArticleApiResponseS
-    fun getTechnology() : ArticleApiResponseS
+    fun getMostPopular() : ArticleApiResponse
+    fun getTopStories() : ArticleApiResponse
+    fun getScience() : ArticleApiResponse
+    fun getTechnology() : ArticleApiResponse
 
 }

@@ -1,24 +1,24 @@
 package com.gt.mynews.usecases
 
-import com.gt.mynews.data.ArticleApiResponseS
+import com.gt.mynews.data.ArticleApiResponse
 
 class NytUseCaseImpl : NytUseCase {
 
 
 
-    override fun getMostPopular(): ArticleApiResponseS {
+    override fun getMostPopular(): ArticleApiResponse {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getTopStories(): ArticleApiResponseS {
+    override fun getTopStories(): ArticleApiResponse {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getScience(): ArticleApiResponseS {
+    override fun getScience(): ArticleApiResponse {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getTechnology(): ArticleApiResponseS {
+    override fun getTechnology(): ArticleApiResponse {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

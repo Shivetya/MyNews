@@ -3,9 +3,7 @@ package com.gt.mynews.models
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.gt.mynews.data.ArticleApiResponseMP
-import com.gt.mynews.data.ArticleApiResponseS
-import com.gt.mynews.data.ArticleApiResponseTS
+import com.gt.mynews.data.ArticleApiResponse
 import kotlinx.android.synthetic.main.recycler_views_item.view.*
 
 class ArticleApiResponseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -14,20 +12,13 @@ class ArticleApiResponseViewHolder(itemView : View) : RecyclerView.ViewHolder(it
     private val textViewDate : TextView = itemView.fragment_items_text_date
     private val textViewDescription : TextView = itemView.fragment_items_text_description
 
-    fun updateWithApiResponseS(articleApiResponse : ArticleApiResponseS, position : Int){
+    fun updateWithApiResponseS(articleApiResponse : ArticleApiResponse, position : Int){
         textViewTitle.text = articleApiResponse.response?.docs?.get(position)?.keywords?.get(0)?.value
         textViewDate.text = articleApiResponse.response?.docs?.get(position)?.pubDate
         textViewDescription.text = articleApiResponse.response?.docs?.get(position)?.snippet
     }
 
-    fun updateWithApiResponseMP(articleApiResponse: ArticleApiResponseMP, position: Int){
-        val stringTitle : String = ("${articleApiResponse.results?.get(position)?.section} > ${articleApiResponse.results?.get(position)?.geoFacet}")
-        textViewTitle.text = stringTitle
-        textViewDate.text = articleApiResponse.results?.get(position)?.publishedDate
-        textViewDescription.text = articleApiResponse.results?.get(position)?.title
-    }
-
-    fun updateWithApiResponseTS(articleApiResponse: ArticleApiResponseTS, position: Int){
+    fun updateWithApiResponseMPTS(articleApiResponse: ArticleApiResponse, position: Int){
         val stringTitle : String = ("${articleApiResponse.results?.get(position)?.section} > ${articleApiResponse.results?.get(position)?.geoFacet}")
         textViewTitle.text = stringTitle
         textViewDate.text = articleApiResponse.results?.get(position)?.publishedDate
