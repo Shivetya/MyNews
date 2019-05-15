@@ -13,12 +13,13 @@ import com.gt.mynews.R
 import com.gt.mynews.data.ArticleApiResponse
 import com.gt.mynews.viewmodels.GenericViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
+import com.gt.mynews.viewmodels.models.Article
 import com.gt.mynews.views.adapters.ArticleApiResponseAdapter
 import kotlinx.android.synthetic.main.fragment_generic_recycler.*
 
 abstract class AbsTitledFragment : Fragment() {
 
-    private lateinit var articleApiResponse: ArticleApiResponse
+    private lateinit var article: List<Article>
     private lateinit var adapter: ArticleApiResponseAdapter
     private val recyclerView : RecyclerView = fragment_generic_recyclerview
 
@@ -34,7 +35,7 @@ abstract class AbsTitledFragment : Fragment() {
 
         configureRecyclerView()
 
-        viewModel.mutableListOfLiveData
+        viewModel.articles
                 .observe(this, Observer { updateUI(it) })
 
         return inflater.inflate(R.layout.fragment_generic_recycler, container, false)
@@ -42,15 +43,15 @@ abstract class AbsTitledFragment : Fragment() {
 
     private fun configureRecyclerView(){
 
-        articleApiResponse = ArticleApiResponse()
-        adapter = ArticleApiResponseAdapter(articleApiResponse)
+        article = listOf(Article(null,null, null, null ))
+        adapter = ArticleApiResponseAdapter(article)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
     }
 
-    private fun updateUI(newArticleApiResponse: ArticleApiResponse){
-        articleApiResponse = newArticleApiResponse
+    private fun updateUI(newArticles: List<Article>){
+        article = newArticles
         adapter.notifyDataSetChanged()
     }
 }
