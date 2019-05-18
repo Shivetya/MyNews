@@ -1,5 +1,6 @@
 package com.gt.mynews.viewmodels
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,28 +10,33 @@ import com.gt.mynews.viewmodels.models.Article
 import kotlinx.coroutines.*
 
 
-class GenericViewModel (private val useCase : NytUseCase) : ViewModel() {
+class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
 
     private val _articles = MutableLiveData<List<Article>>()
-    val articles : LiveData<List<Article>> = _articles
+    val articles: LiveData<List<Article>> = _articles
 
-    private var currentJob : Job? = null
+    private var currentJob: Job? = null
 
     init {
         reloadArticles()
     }
 
-    fun reloadArticles(){
+    fun reloadArticles() {
 
-        viewModelScope.launch(Dispatchers.IO){
+        currentJob = viewModelScope.launch(Dispatchers.IO) {
+            fetchArticles()
+        }
+    }
 
-            val articlesMP = useCase.getMostPopular()?.results
-                    ?.map {
-                        Article(it.geoFacet?.get(0), it.section, it.title, it.publishedDate)
-                    }
-            withContext(Dispatchers.Main){
-                _articles.value = articlesMP
-            }
+    @VisibleForTesting
+    suspend fun fetchArticles() {
+
+        val articlesMP = useCase.getMostPopular()?.results
+                ?.map {
+                    Article(it.geoFacet?.get(0), it.section, it.title, it.publishedDate)
+                }
+        withContext(Dispatchers.Main) {
+            _articles.value = articlesMP
         }
     }
 }
