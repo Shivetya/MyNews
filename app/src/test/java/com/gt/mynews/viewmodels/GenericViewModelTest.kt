@@ -1,27 +1,32 @@
 package com.gt.mynews.viewmodels
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gt.mynews.data.ArticleApiResponse
-import com.gt.mynews.data.Doc
-import com.gt.mynews.data.Response
 import com.gt.mynews.data.Result
 import com.gt.mynews.usecases.NytUseCase
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class GenericViewModelTest{
 
-    @Test
-    fun `should expose list of models after initialisation`() = runBlocking {
-        //given
-        val useCase = object : NytUseCase{
+    @get:Rule
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    private lateinit var useCase : NytUseCase
+
+    @Before
+    fun setUseCase() {
+        useCase = object : NytUseCase {
             override fun getMostPopular(): ArticleApiResponse? {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur\$ d'arg€nt vont €n pri\$on !"
+                        title = "De$ vol€urs d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -32,7 +37,7 @@ class GenericViewModelTest{
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur\$ d'arg€nt vont €n pri\$on !"
+                        title = "De$ vol€urs d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -43,7 +48,7 @@ class GenericViewModelTest{
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur\$ d'arg€nt vont €n pri\$on !"
+                        title = "De$ vol€urs d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -54,13 +59,20 @@ class GenericViewModelTest{
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur\$ d'arg€nt vont €n pri\$on !"
+                        title = "De$ vol€urs d'arg€nt vont €n prison !"
                     })
                 }
             }
         }
-        val viewModel = GenericViewModel(useCase)
+    }
 
+
+
+    @Test
+    fun `should expose list of models after initialisation`(){
+
+        //given
+        val viewModel = runBlocking {GenericViewModel(useCase)}
 
         //then
         assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)

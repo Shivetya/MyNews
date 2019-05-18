@@ -4,13 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gt.mynews.data.ArticleApiResponse
 import com.gt.mynews.usecases.NytUseCase
 import com.gt.mynews.viewmodels.models.Article
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 
 class GenericViewModel (private val useCase : NytUseCase) : ViewModel() {
@@ -21,7 +17,6 @@ class GenericViewModel (private val useCase : NytUseCase) : ViewModel() {
     private var currentJob : Job? = null
 
     init {
-
         reloadArticles()
     }
 
@@ -31,12 +26,11 @@ class GenericViewModel (private val useCase : NytUseCase) : ViewModel() {
 
             val articlesMP = useCase.getMostPopular()?.results
                     ?.map {
-                        Article(it.geoFacet?.get(0), it.title, it.title, it.publishedDate)
+                        Article(it.geoFacet?.get(0), it.section, it.title, it.publishedDate)
                     }
             withContext(Dispatchers.Main){
                 _articles.value = articlesMP
             }
         }
-
     }
 }
