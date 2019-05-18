@@ -5,13 +5,14 @@ import com.gt.mynews.data.Doc
 import com.gt.mynews.data.Response
 import com.gt.mynews.data.Result
 import com.gt.mynews.usecases.NytUseCase
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GenericViewModelTest{
 
     @Test
-    fun `should expose list of models after initialisation`(){
+    fun `should expose list of models after initialisation`() = runBlocking {
         //given
         val useCase = object : NytUseCase{
             override fun getMostPopular(): ArticleApiResponse? {
