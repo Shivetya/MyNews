@@ -23,17 +23,6 @@ class GenericViewModelTest {
 
     private lateinit var useCase: NytUseCase
 
-    @Test
-    fun `should expose list of models after initialisation`() = runBlockingTest {
-        //given
-        val viewModel = GenericViewModel(useCase)
-
-        viewModel.fetchArticles()
-
-        //then
-        assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)
-    }
-
     // region @Before initialization
     @Before
     fun setUseCase() {
@@ -44,7 +33,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€urs d'arg€nt vont €n prison !"
+                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -55,7 +44,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€urs d'arg€nt vont €n prison !"
+                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -66,7 +55,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€urs d'arg€nt vont €n prison !"
+                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
                 }
             }
@@ -75,13 +64,57 @@ class GenericViewModelTest {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
-                        geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
+                        geoFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€urs d'arg€nt vont €n prison !"
+                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
                 }
             }
         }
     }
-    // endregion
+
+    @Test
+    fun `should expose list of models (articles) after initialisation - get date`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        viewModel.fetchArticlesMPTS()
+
+        //then
+        assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)
+    }
+
+    @Test
+    fun `should expose list of models (articles) after initialisation - get section`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        viewModel.fetchArticlesMPTS()
+
+        //then
+
+        assertEquals("Ici ! > lolilol", viewModel.articles.value?.get(0)?.categoryArticle)
+    }
+
+    @Test
+    fun `should expose list of models (articles) after initialisation - get URL`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        viewModel.fetchArticlesMPTS()
+
+        //then
+        assertEquals("lolilol", viewModel.articles.value?.get(0)?.imageUrl)
+    }
+
+    @Test
+    fun `should expose list of models (articles) after initialisation - get title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        viewModel.fetchArticlesMPTS()
+
+        //then
+        assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
+    }
 }

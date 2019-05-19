@@ -1,8 +1,8 @@
 package com.gt.mynews.viewmodels.models
 
 data class Article(
-        val title : String?,
+        val categoryArticle : String?,
         val imageUrl : String?,
-        val description : String?,
+        val articleTitle : String?,
         val date : String?
 )

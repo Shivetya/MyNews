@@ -18,22 +18,22 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
     private var currentJob: Job? = null
 
     init {
-        reloadArticles()
+        reloadArticlesMPTS()
     }
 
-    fun reloadArticles() {
+    fun reloadArticlesMPTS() {
 
         currentJob = viewModelScope.launch(Dispatchers.IO) {
-            fetchArticles()
+            fetchArticlesMPTS()
         }
     }
 
     @VisibleForTesting
-    suspend fun fetchArticles() {
+    suspend fun fetchArticlesMPTS() {
 
         val articlesMP = useCase.getMostPopular()?.results
                 ?.map {
-                    Article(it.geoFacet?.get(0), it.section, it.title, it.publishedDate)
+                    Article("${it.geoFacet?.get(0)} > ${it.section}", it.section, it.title, it.publishedDate)
                 }
         withContext(Dispatchers.Main) {
             _articles.value = articlesMP

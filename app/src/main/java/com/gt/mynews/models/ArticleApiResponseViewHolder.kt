@@ -14,9 +14,9 @@ class ArticleApiResponseViewHolder(itemView : View) : RecyclerView.ViewHolder(it
     private val textViewDescription: TextView = itemView.fragment_items_text_description
 
     fun updateWithResponse(articles: List<Article>, position: Int) {
-        textViewTitle.text = articles[position].title
+        textViewTitle.text = articles[position].categoryArticle
         textViewDate.text = articles[position].date
-        textViewDescription.text = articles[position].description
+        textViewDescription.text = articles[position].articleTitle
     }
 
 }
