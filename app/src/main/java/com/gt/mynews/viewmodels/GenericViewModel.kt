@@ -23,6 +23,8 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
 
     fun reloadArticlesMP() {
 
+        cancelJobIfActive()
+
         currentJob = viewModelScope.launch(Dispatchers.IO) {
             fetchArticlesMP()
         }
@@ -40,6 +42,46 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
     }
 
     fun reloadArticlesTS(keywordTS : String?){
-        TODO()
+
+        cancelJobIfActive()
+
+        currentJob = viewModelScope.launch(Dispatchers.IO) {
+            fetchArticlesTS(keywordTS)
+        }
+    }
+
+    suspend fun fetchArticlesTS(keywordTS : String?){
+
+        val articlesTS : List<Article>?
+
+        when(keywordTS){
+            "home" -> articlesTS = useCase.getTopStories()?.results
+                ?.map {
+                    Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                }
+            "science" -> articlesTS = useCase.getScience()?.results
+                    ?.map {
+                        Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                    }
+            "technology" -> articlesTS = useCase.getTechnology()?.results
+                    ?.map {
+                        Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                    }
+            else -> articlesTS = null
+        }
+
+        withContext(Dispatchers.Main){
+            _articles.value = articlesTS
+        }
+    }
+
+
+    private fun cancelJobIfActive(){
+
+        currentJob?.let {
+            if(it.isActive){
+                it.cancel()
+            }
+        }
     }
 }
