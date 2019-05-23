@@ -1,19 +1,19 @@
 package com.gt.mynews.views.adapters
 
 
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.gt.mynews.views.fragments.*
 
-class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter(fragmentManager){
+class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT){
 
     private val fragments = listOf(
-            TopStoriesFragment.newInstance(),
+            TopStoriesFragment.newInstance("home"),
             MostPopularFragment.newInstance(),
-            GenericSearchFragment.newInstance("science"),
-            GenericSearchFragment.newInstance("technology")
-
+            TopStoriesFragment.newInstance("science"),
+            TopStoriesFragment.newInstance("technology")
     )
 
     override fun getItem(position: Int): Fragment = fragments[position]

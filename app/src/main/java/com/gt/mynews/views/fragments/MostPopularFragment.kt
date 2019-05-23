@@ -18,4 +18,8 @@ class MostPopularFragment : AbsTitledFragment() {
     }
 
     override fun getKeyword(): String? = getString(R.string.most_popular)
+
+    override fun loadArticle() {
+        super.viewModel.reloadArticlesMP()
+    }
 }

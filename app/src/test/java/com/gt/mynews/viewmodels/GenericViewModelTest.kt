@@ -31,7 +31,7 @@ class GenericViewModelTest {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
-                        geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
+                        desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
@@ -42,7 +42,7 @@ class GenericViewModelTest {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
-                        geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
+                        desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
@@ -53,7 +53,7 @@ class GenericViewModelTest {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
-                        geoFacet = listOf("Ici !", "Vraim€nt Ici !!!")
+                        desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
@@ -64,7 +64,7 @@ class GenericViewModelTest {
                 return ArticleApiResponse().apply {
                     results = listOf(Result().apply {
                         section = "lolilol"
-                        geoFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
+                        desFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                     })
@@ -78,7 +78,7 @@ class GenericViewModelTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
-        viewModel.fetchArticlesMPTS()
+        viewModel.fetchArticlesMP()
 
         //then
         assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)
@@ -89,11 +89,11 @@ class GenericViewModelTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
-        viewModel.fetchArticlesMPTS()
+        viewModel.fetchArticlesMP()
 
         //then
 
-        assertEquals("Ici ! > lolilol", viewModel.articles.value?.get(0)?.categoryArticle)
+        assertEquals("lolilol > Ici !", viewModel.articles.value?.get(0)?.categoryArticle)
     }
 
     @Test
@@ -101,7 +101,7 @@ class GenericViewModelTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
-        viewModel.fetchArticlesMPTS()
+        viewModel.fetchArticlesMP()
 
         //then
         assertEquals("lolilol", viewModel.articles.value?.get(0)?.imageUrl)
@@ -112,7 +112,7 @@ class GenericViewModelTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
-        viewModel.fetchArticlesMPTS()
+        viewModel.fetchArticlesMP()
 
         //then
         assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)

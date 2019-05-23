@@ -21,32 +21,34 @@ abstract class AbsTitledFragment : Fragment() {
 
     private lateinit var article: List<Article>
     private lateinit var adapter: ArticleApiResponseAdapter
-    private val recyclerView : RecyclerView = fragment_generic_recyclerview
 
-    private val viewModel by lazy {
+    protected val viewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(GenericViewModel::class.java)
     }
 
     abstract fun getKeyword() : String?
+    abstract fun loadArticle()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        configureRecyclerView()
-
-        viewModel.articles
-                .observe(this, Observer { updateUI(it) })
-
         return inflater.inflate(R.layout.fragment_generic_recycler, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        configureRecyclerView()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun configureRecyclerView(){
 
         article = listOf(Article(null,null, null, null ))
         adapter = ArticleApiResponseAdapter(article)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
+        fragment_generic_recyclerview.layoutManager = LinearLayoutManager(activity)
+        fragment_generic_recyclerview.adapter = adapter
+        viewModel.articles
+                .observe(this, Observer { updateUI(it) })
 
     }
 

@@ -36,18 +36,14 @@ dependencies {
     implementation "com.google.android.material:material:1.1.0-alpha06"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.5.0" // Core
-    implementation "com.squareup.okhttp3:logging-interceptor:3.14.1" // Interceptor to log API calls in logcat
+    //implementation "com.squareup.okhttp3:logging-interceptor:3.14.1" // Interceptor to log API calls in logcat
     implementation "com.squareup.retrofit2:converter-gson:2.5.0" // Converts JSON to POJO / POKO
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
-
-    // Dagger2
-    implementation 'com.google.dagger:dagger:2.13'
-    kapt 'com.google.dagger:dagger-compiler:2.13'
 
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     testImplementation 'junit:junit:4.12'

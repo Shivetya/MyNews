@@ -37,25 +37,25 @@ class Result {
     var source: String? = null
     @SerializedName("id")
     @Expose
-    var id: Int? = null
+    var id: Long? = null
     @SerializedName("asset_id")
     @Expose
-    var assetId: Int? = null
+    var assetId: Long? = null
     @SerializedName("views")
     @Expose
     var views: Int? = null
     @SerializedName("des_facet")
     @Expose
     var desFacet: List<String>? = null
-    @SerializedName("org_facet")
+    /**@SerializedName("org_facet")
     @Expose
     var orgFacet: List<String>? = null
     @SerializedName("per_facet")
     @Expose
-    var perFacet: String? = null
+    var perFacet: List<String>? = null
     @SerializedName("geo_facet")
     @Expose
-    var geoFacet: List<String>? = null
+    var geoFacet: List<String>? = null**/
     @SerializedName("media")
     @Expose
     var media: List<Medium>? = null
