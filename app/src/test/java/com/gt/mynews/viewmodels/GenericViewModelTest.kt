@@ -44,7 +44,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
+                        title = "Yep, à tester aussi !"
                     })
                 }
             }
@@ -55,7 +55,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
+                        title = "Des mots à tester"
                     })
                 }
             }
@@ -66,7 +66,7 @@ class GenericViewModelTest {
                         section = "lolilol"
                         desFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
-                        title = "De$ vol€ur$ d'arg€nt vont €n prison !"
+                        title = "Mouahahahahahahha"
                     })
                 }
             }
@@ -74,7 +74,7 @@ class GenericViewModelTest {
     }
 
     @Test
-    fun `should expose list of models (articles) after initialisation - get date`() = runBlockingTest {
+    fun `should expose list of models (articles Most Popular) - get date`() = runBlockingTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
@@ -85,7 +85,7 @@ class GenericViewModelTest {
     }
 
     @Test
-    fun `should expose list of models (articles) after initialisation - get section`() = runBlockingTest {
+    fun `should expose list of models (articles Most Popular) - get section`() = runBlockingTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
@@ -97,7 +97,7 @@ class GenericViewModelTest {
     }
 
     @Test
-    fun `should expose list of models (articles) after initialisation - get URL`() = runBlockingTest {
+    fun `should expose list of models (articles Most Popular) - get URL`() = runBlockingTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
@@ -108,7 +108,7 @@ class GenericViewModelTest {
     }
 
     @Test
-    fun `should expose list of models (articles) after initialisation - get title`() = runBlockingTest {
+    fun `should expose list of models (articles Most Popular) - get title`() = runBlockingTest {
         //given
         val viewModel = GenericViewModel(useCase)
 
@@ -116,5 +116,57 @@ class GenericViewModelTest {
 
         //then
         assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose list of models (articles Top Stories) with keyword Science - get Title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("Des mots à tester")
+
+        //then
+
+        assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose list of models (articles Top Stories) with keyword Technology - get Title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("technology")
+
+        //then
+
+        assertEquals("Mouahahahahahahha", viewModel.articles.value?.get(0)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose list of models (articles Top Stories) with keyword Home - get Title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("home")
+
+        //then
+
+        assertEquals("Yep, à tester aussi !", viewModel.articles.value?.get(0)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose null (articles Top Stories) with random keyword - get Title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("Lol")
+
+        //then
+
+        assertEquals(null, viewModel.articles.value?.get(0)?.articleTitle)
     }
 }

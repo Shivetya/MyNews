@@ -28,7 +28,6 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
         }
     }
 
-    @VisibleForTesting
     suspend fun fetchArticlesMP() {
 
         val articlesMP = useCase.getMostPopular()?.results
@@ -38,5 +37,9 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
         withContext(Dispatchers.Main) {
             _articles.value = articlesMP
         }
+    }
+
+    fun reloadArticlesTS(keywordTS : String?){
+        TODO()
     }
 }
