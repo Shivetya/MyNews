@@ -124,11 +124,11 @@ class GenericViewModelTest {
         val viewModel = GenericViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("Des mots à tester")
+        viewModel.fetchArticlesTS("science")
 
         //then
 
-        assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
+        assertEquals("Des mots à tester", viewModel.articles.value?.get(0)?.articleTitle)
     }
 
     @Test

@@ -52,22 +52,20 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
 
     suspend fun fetchArticlesTS(keywordTS : String?){
 
-        val articlesTS : List<Article>?
-
-        when(keywordTS){
-            "home" -> articlesTS = useCase.getTopStories()?.results
-                ?.map {
-                    Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
-                }
-            "science" -> articlesTS = useCase.getScience()?.results
+        val articlesTS = when(keywordTS){
+            "home" -> useCase.getTopStories()?.results
                     ?.map {
                         Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
                     }
-            "technology" -> articlesTS = useCase.getTechnology()?.results
-                    ?.map {
-                        Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
-                    }
-            else -> articlesTS = null
+            "science" -> useCase.getScience()?.results
+                        ?.map {
+                            Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                        }
+            "technology" -> useCase.getTechnology()?.results
+                        ?.map {
+                            Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                        }
+            else ->  null
         }
 
         withContext(Dispatchers.Main){
