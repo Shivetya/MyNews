@@ -12,7 +12,7 @@ class NytUseCaseImpl : NytUseCase {
     companion object{
 
         private const val APIKEY_NAME = "api-key"
-        private const val APIKEY_VALUE = ApiKeyGitIgnore.apiKey
+        private const val APIKEY_VALUE = "vWKN7OglEv7zK9KY4pWAHwAgqU0s9Rhk"
 
         private var serviceMP : NytApi
         private var serviceS : NytApi
