@@ -20,17 +20,14 @@ import kotlinx.android.synthetic.main.fragment_generic_recycler.*
 
 abstract class AbsTitledFragment : Fragment() {
 
-    private lateinit var article: List<Article>
-    private lateinit var adapter: ArticleApiResponseAdapter
+    protected lateinit var article: List<Article>
+    protected lateinit var adapter: ArticleApiResponseAdapter
     lateinit var fragmentGenericRV : RecyclerView
-
-    protected val viewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(GenericViewModel::class.java)
-    }
 
 
     abstract fun getKeyword() : String?
     abstract fun loadArticle()
+    abstract fun setObserve()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,15 +50,8 @@ abstract class AbsTitledFragment : Fragment() {
 
     }
 
-    private fun updateUI(newArticles: List<Article>){
-        article = newArticles
-        adapter.notifyDataSetChanged()
-    }
 
-    private fun setObserve() {
-        viewModel.articles
-                .observe(this, Observer {
-                    updateUI(it) })
-    }
+
+
 
 }

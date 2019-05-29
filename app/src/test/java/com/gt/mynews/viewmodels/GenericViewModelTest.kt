@@ -98,7 +98,7 @@ class GenericViewModelTest {
         //given
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticlesMP()
+        viewModel.fetchArticles(null)
 
         //then
         assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)
@@ -109,7 +109,7 @@ class GenericViewModelTest {
         //given
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticlesMP()
+        viewModel.fetchArticles("bonjour")
 
         //then
 
@@ -121,7 +121,7 @@ class GenericViewModelTest {
         //given
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticlesMP()
+        viewModel.fetchArticles(null)
 
         //then
         assertEquals("lolilol", viewModel.articles.value?.get(0)?.imageUrl)
@@ -132,7 +132,7 @@ class GenericViewModelTest {
         //given
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticlesMP()
+        viewModel.fetchArticles(null)
 
         //then
         assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
@@ -143,7 +143,7 @@ class GenericViewModelTest {
         //given
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticlesMP()
+        viewModel.fetchArticles("Bonjour")
 
         //then
         assertEquals("aujourd'hui", viewModel.articles.value?.get(1)?.date)
@@ -155,7 +155,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("science")
+        viewModel.fetchArticles("science")
 
         //then
 
@@ -168,7 +168,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("technology")
+        viewModel.fetchArticles("technology")
 
         //then
 
@@ -181,7 +181,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("home")
+        viewModel.fetchArticles("home")
 
         //then
 
@@ -194,7 +194,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("Lol")
+        viewModel.fetchArticles("Lol")
 
         //then
 
@@ -207,7 +207,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("science")
+        viewModel.fetchArticles("science")
 
         //then
 
@@ -220,7 +220,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticlesTS("technology")
+        viewModel.fetchArticles("technology")
 
         //then
 

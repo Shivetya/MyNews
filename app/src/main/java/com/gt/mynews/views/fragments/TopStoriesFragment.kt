@@ -3,12 +3,21 @@ package com.gt.mynews.views.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.gt.mynews.viewmodels.TopStoriesViewModel
+import com.gt.mynews.viewmodels.ViewModelFactory
+import com.gt.mynews.viewmodels.models.Article
 
 /**
  * A simple [Fragment] subclass.
  *
  */
 class TopStoriesFragment : AbsTitledFragment() {
+
+    private val viewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
+    }
 
     companion object{
 
@@ -30,7 +39,17 @@ class TopStoriesFragment : AbsTitledFragment() {
     override fun getKeyword(): String? = arguments?.getString(KEY_KEYWORD)
 
     override fun loadArticle() {
-        super.viewModel.reloadArticlesTS(arguments?.getString(KEY_KEYWORD))
+        viewModel.reloadArticles(arguments?.getString(KEY_KEYWORD))
     }
 
+    override fun setObserve() {
+        viewModel.articles
+                .observe(this, Observer {
+                    updateUI(it) })
+    }
+
+    private fun updateUI(newArticles: List<Article>){
+        article = newArticles
+        adapter.notifyDataSetChanged()
+    }
 }
