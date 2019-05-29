@@ -1,6 +1,5 @@
 package com.gt.mynews.viewmodels
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,10 +16,6 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
 
     private var currentJob: Job? = null
 
-    init {
-        reloadArticlesMP()
-    }
-
     fun reloadArticlesMP() {
 
         cancelJobIfActive()
@@ -34,7 +29,7 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
 
         val articlesMP = useCase.getMostPopular()?.results
                 ?.map {
-                    Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                    Article(it.section, it.section, it.title, it.publishedDate)
                 }
         withContext(Dispatchers.Main) {
             _articles.value = articlesMP
@@ -55,15 +50,15 @@ class GenericViewModel(private val useCase: NytUseCase) : ViewModel() {
         val articlesTS = when(keywordTS){
             "home" -> useCase.getTopStories()?.results
                     ?.map {
-                        Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                        Article(it.section, it.section, it.title, it.publishedDate)
                     }
             "science" -> useCase.getScience()?.results
                         ?.map {
-                            Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                            Article(it.section, it.section, it.title, it.publishedDate)
                         }
             "technology" -> useCase.getTechnology()?.results
                         ?.map {
-                            Article("${it.section} > ${it.desFacet?.get(0)}", it.section, it.title, it.publishedDate)
+                            Article(it.section, it.section, it.title, it.publishedDate)
                         }
             else ->  null
         }

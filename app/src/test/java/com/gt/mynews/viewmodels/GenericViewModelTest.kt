@@ -34,6 +34,11 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
+                    },Result().apply {
+                        section = "Abracadabra"
+                        desFacet = listOf("KH", "FF")
+                        publishedDate = "aujourd'hui"
+                        title = "un gros titre scandaleux ici"
                     })
                 }
             }
@@ -45,6 +50,11 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "Yep, à tester aussi !"
+                    },Result().apply {
+                        section = "cheveux"
+                        desFacet = listOf("tada", "tidi")
+                        publishedDate = "hier"
+                        title = "un gros titre scandaleux ici, come d'hab"
                     })
                 }
             }
@@ -56,6 +66,11 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "Des mots à tester"
+                    },Result().apply {
+                        section = "Papier"
+                        desFacet = listOf("Feuille", "Ciseaux")
+                        publishedDate = "Demain"
+                        title = "Puit"
                     })
                 }
             }
@@ -67,6 +82,11 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "Mouahahahahahahha"
+                    },Result().apply {
+                        section = "Cloud"
+                        desFacet = listOf("Tifa", "Barret")
+                        publishedDate = "Le premier jour"
+                        title = "Aerith"
                     })
                 }
             }
@@ -93,7 +113,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals("lolilol > Ici !", viewModel.articles.value?.get(0)?.categoryArticle)
+        assertEquals("lolilol", viewModel.articles.value?.get(0)?.categoryArticle)
     }
 
     @Test
@@ -168,5 +188,31 @@ class GenericViewModelTest {
         //then
 
         assertEquals(null, viewModel.articles.value?.get(0)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose second article (articles Top Stories) with science - get second Title`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("science")
+
+        //then
+
+        assertEquals("Puit", viewModel.articles.value?.get(1)?.articleTitle)
+    }
+
+    @Test
+    fun`should expose second article (articles Top Stories) with technology - get second date`() = runBlockingTest {
+        //given
+        val viewModel = GenericViewModel(useCase)
+
+        //when
+        viewModel.fetchArticlesTS("technology")
+
+        //then
+
+        assertEquals("Le premier jour", viewModel.articles.value?.get(1)?.date)
     }
 }

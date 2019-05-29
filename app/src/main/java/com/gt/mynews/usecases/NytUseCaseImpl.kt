@@ -4,6 +4,7 @@ import com.gt.mynews.data.ArticleApiResponse
 import com.gt.mynews.utils.ApiKeyGitIgnore
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,12 +31,12 @@ class NytUseCaseImpl : NytUseCase {
                 chain.proceed(request)
             }
 
-            //val loggingInterceptor = HttpLoggingInterceptor()
-            //loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
                     .addInterceptor(apiKeyInterceptor)
-                    //.addInterceptor(loggingInterceptor)
+                    .addInterceptor(loggingInterceptor)
                     .build()
 
             val retrofit = Retrofit.Builder()

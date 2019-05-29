@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,10 +22,12 @@ abstract class AbsTitledFragment : Fragment() {
 
     private lateinit var article: List<Article>
     private lateinit var adapter: ArticleApiResponseAdapter
+    lateinit var fragmentGenericRV : RecyclerView
 
     protected val viewModel by lazy {
         ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(GenericViewModel::class.java)
     }
+
 
     abstract fun getKeyword() : String?
     abstract fun loadArticle()
@@ -32,23 +35,21 @@ abstract class AbsTitledFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_generic_recycler, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val fragView = inflater.inflate(R.layout.fragment_generic_recycler, container, false)
+        fragmentGenericRV = fragView.findViewById<View>(R.id.fragment_generic_recyclerview) as RecyclerView
+        setObserve()
         configureRecyclerView()
-        super.onViewCreated(view, savedInstanceState)
+        loadArticle()
+
+        return fragView
     }
 
     private fun configureRecyclerView(){
 
         article = listOf(Article(null,null, null, null ))
+        fragmentGenericRV.layoutManager = LinearLayoutManager(activity?.applicationContext)
         adapter = ArticleApiResponseAdapter(article)
-        fragment_generic_recyclerview.layoutManager = LinearLayoutManager(activity)
-        fragment_generic_recyclerview.adapter = adapter
-        viewModel.articles
-                .observe(this, Observer { updateUI(it) })
+        fragmentGenericRV.adapter = adapter
 
     }
 
@@ -56,4 +57,11 @@ abstract class AbsTitledFragment : Fragment() {
         article = newArticles
         adapter.notifyDataSetChanged()
     }
+
+    private fun setObserve() {
+        viewModel.articles
+                .observe(this, Observer {
+                    updateUI(it) })
+    }
+
 }
