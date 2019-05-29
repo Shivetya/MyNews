@@ -4,23 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gt.mynews.R
-import com.gt.mynews.data.ArticleApiResponse
-import com.gt.mynews.viewmodels.GenericViewModel
-import com.gt.mynews.viewmodels.ViewModelFactory
 import com.gt.mynews.viewmodels.models.Article
 import com.gt.mynews.views.adapters.ArticleApiResponseAdapter
-import kotlinx.android.synthetic.main.fragment_generic_recycler.*
 
 abstract class AbsTitledFragment : Fragment() {
 
-    protected lateinit var article: List<Article>
+    protected lateinit var article: MutableList<Article>
     protected lateinit var adapter: ArticleApiResponseAdapter
     lateinit var fragmentGenericRV : RecyclerView
 
@@ -43,14 +36,18 @@ abstract class AbsTitledFragment : Fragment() {
 
     private fun configureRecyclerView(){
 
-        article = listOf(Article(null,null, null, null ))
+        article = mutableListOf()
         fragmentGenericRV.layoutManager = LinearLayoutManager(activity?.applicationContext)
         adapter = ArticleApiResponseAdapter(article)
         fragmentGenericRV.adapter = adapter
 
     }
 
-
+    fun updateUI(newArticles: List<Article>){
+        article.clear()
+        article.addAll(newArticles)
+        adapter.notifyDataSetChanged()
+    }
 
 
 

@@ -47,9 +47,4 @@ class TopStoriesFragment : AbsTitledFragment() {
                 .observe(this, Observer {
                     updateUI(it) })
     }
-
-    private fun updateUI(newArticles: List<Article>){
-        article = newArticles
-        adapter.notifyDataSetChanged()
-    }
 }

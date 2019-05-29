@@ -36,8 +36,4 @@ class MostPopularFragment : AbsTitledFragment() {
                     updateUI(it) })
     }
 
-    private fun updateUI(newArticles: List<Article>){
-        article = newArticles
-        adapter.notifyDataSetChanged()
-    }
 }
