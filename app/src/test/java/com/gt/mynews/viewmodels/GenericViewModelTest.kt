@@ -96,7 +96,7 @@ class GenericViewModelTest {
     @Test
     fun `should expose list of models (articles Most Popular) - get date`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = MostPopularViewModel(useCase)
 
         viewModel.fetchArticlesMP()
 
@@ -107,7 +107,7 @@ class GenericViewModelTest {
     @Test
     fun `should expose list of models (articles Most Popular) - get section`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = MostPopularViewModel(useCase)
 
         viewModel.fetchArticlesMP()
 
@@ -119,7 +119,7 @@ class GenericViewModelTest {
     @Test
     fun `should expose list of models (articles Most Popular) - get URL`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = MostPopularViewModel(useCase)
 
         viewModel.fetchArticlesMP()
 
@@ -130,7 +130,7 @@ class GenericViewModelTest {
     @Test
     fun `should expose list of models (articles Most Popular) - get title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = MostPopularViewModel(useCase)
 
         viewModel.fetchArticlesMP()
 
@@ -139,9 +139,20 @@ class GenericViewModelTest {
     }
 
     @Test
+    fun `should expose list of models (articles Most Popular) second article - get date`() = runBlockingTest {
+        //given
+        val viewModel = MostPopularViewModel(useCase)
+
+        viewModel.fetchArticlesMP()
+
+        //then
+        assertEquals("aujourd'hui", viewModel.articles.value?.get(1)?.date)
+    }
+
+    @Test
     fun`should expose list of models (articles Top Stories) with keyword Science - get Title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("science")
@@ -154,7 +165,7 @@ class GenericViewModelTest {
     @Test
     fun`should expose list of models (articles Top Stories) with keyword Technology - get Title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("technology")
@@ -167,7 +178,7 @@ class GenericViewModelTest {
     @Test
     fun`should expose list of models (articles Top Stories) with keyword Home - get Title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("home")
@@ -180,7 +191,7 @@ class GenericViewModelTest {
     @Test
     fun`should expose null (articles Top Stories) with random keyword - get Title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("Lol")
@@ -193,7 +204,7 @@ class GenericViewModelTest {
     @Test
     fun`should expose second article (articles Top Stories) with science - get second Title`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("science")
@@ -206,7 +217,7 @@ class GenericViewModelTest {
     @Test
     fun`should expose second article (articles Top Stories) with technology - get second date`() = runBlockingTest {
         //given
-        val viewModel = GenericViewModel(useCase)
+        val viewModel = TopStoriesViewModel(useCase)
 
         //when
         viewModel.fetchArticlesTS("technology")
