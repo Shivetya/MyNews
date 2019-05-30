@@ -1,8 +1,7 @@
 package com.gt.mynews.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.gt.mynews.data.ArticleApiResponse
-import com.gt.mynews.data.Result
+import com.gt.mynews.data.*
 import com.gt.mynews.testutils.CoroutinesTestRule
 import com.gt.mynews.usecases.NytUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +33,11 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15"
                         title = "De$ vol€ur$ d'arg€nt vont €n prison !"
+                        media = listOf(Medium().apply {
+                            mediaMetadata = listOf(MediaMetadatum().apply {
+                                url = "Que de chemin pour cet URL !"
+                            })
+                        })
                     },Result().apply {
                         section = "Abracadabra"
                         desFacet = listOf("KH", "FF")
@@ -48,13 +52,15 @@ class GenericViewModelTest {
                     results = listOf(Result().apply {
                         section = "lolilol"
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
-                        publishedDate = "2019-05-15"
+                        publishedDate = "2019-05-15T16684354"
                         title = "Yep, à tester aussi !"
+                        multimedia = listOf(Multimedium())
                     },Result().apply {
                         section = "cheveux"
                         desFacet = listOf("tada", "tidi")
-                        publishedDate = "hier"
+                        publishedDate = "2019-05-15T16684354"
                         title = "un gros titre scandaleux ici, come d'hab"
+                        multimedia = listOf(Multimedium())
                     })
                 }
             }
@@ -64,13 +70,15 @@ class GenericViewModelTest {
                     results = listOf(Result().apply {
                         section = "lolilol"
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
-                        publishedDate = "2019-05-15"
+                        publishedDate = "2019-05-15T16684354"
                         title = "Des mots à tester"
+                        multimedia = listOf(Multimedium())
                     },Result().apply {
                         section = "Papier"
                         desFacet = listOf("Feuille", "Ciseaux")
-                        publishedDate = "Demain"
+                        publishedDate = "2019-05-15T16684354"
                         title = "Puit"
+                        multimedia = listOf(Multimedium())
                     })
                 }
             }
@@ -80,13 +88,15 @@ class GenericViewModelTest {
                     results = listOf(Result().apply {
                         section = "lolilol"
                         desFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
-                        publishedDate = "2019-05-15"
+                        publishedDate = "2019-05-15T16684354"
                         title = "Mouahahahahahahha"
+                        multimedia = listOf(Multimedium())
                     },Result().apply {
                         section = "Cloud"
                         desFacet = listOf("Tifa", "Barret")
-                        publishedDate = "Le premier jour"
+                        publishedDate = "2019-05-15T16684354"
                         title = "Aerith"
+                        multimedia = listOf(Multimedium())
                     })
                 }
             }
@@ -124,7 +134,7 @@ class GenericViewModelTest {
         viewModel.fetchArticles(null)
 
         //then
-        assertEquals("lolilol", viewModel.articles.value?.get(0)?.imageUrl)
+        assertEquals("Que de chemin pour cet URL !", viewModel.articles.value?.get(0)?.imageUrl)
     }
 
     @Test
@@ -224,6 +234,6 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals("Le premier jour", viewModel.articles.value?.get(1)?.date)
+        assertEquals("2019-05-15", viewModel.articles.value?.get(1)?.date)
     }
 }

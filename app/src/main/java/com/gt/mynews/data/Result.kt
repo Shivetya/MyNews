@@ -59,6 +59,9 @@ class Result {
     @SerializedName("media")
     @Expose
     var media: List<Medium>? = null
+    @SerializedName("multimedia")
+    @Expose
+    var multimedia: List<Multimedium>? = null
     @SerializedName("uri")
     @Expose
     var uri: String? = null

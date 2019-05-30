@@ -3,6 +3,7 @@ package com.gt.mynews.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.gt.mynews.data.Multimedium
 import com.gt.mynews.usecases.NytUseCase
 import com.gt.mynews.viewmodels.models.Article
 import kotlinx.coroutines.Dispatchers
@@ -31,15 +32,39 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
         val articlesTS = when(keyword){
             "home" -> useCase.getTopStories()?.results
                     ?.map {
-                        Article(it.section, it.section, it.title, it.publishedDate)
+                        val image = if (it.multimedia!!.isNotEmpty()) {
+                            it.multimedia?.get(0)?.url
+                        } else {
+                            null
+                        }
+                        Article(it.section,
+                                image,
+                                it.title,
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
                     }
             "science" -> useCase.getScience()?.results
                     ?.map {
-                        Article(it.section, it.section, it.title, it.publishedDate)
+                        val image = if (it.multimedia!!.isNotEmpty()) {
+                            it.multimedia?.get(0)?.url
+                        } else {
+                            null
+                        }
+                        Article(it.section,
+                                image,
+                                it.title,
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
                     }
             "technology" -> useCase.getTechnology()?.results
                     ?.map {
-                        Article(it.section, it.section, it.title, it.publishedDate)
+                        val image = if (it.multimedia!!.isNotEmpty()) {
+                            it.multimedia?.get(0)?.url
+                        } else {
+                            null
+                        }
+                        Article(it.section,
+                                image,
+                                it.title,
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
                     }
             else ->  null
         }

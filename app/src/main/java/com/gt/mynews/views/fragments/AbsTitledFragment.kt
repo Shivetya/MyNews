@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.models.Article
 import com.gt.mynews.views.adapters.ArticleApiResponseAdapter
@@ -14,7 +15,7 @@ import com.gt.mynews.views.adapters.ArticleApiResponseAdapter
 abstract class AbsTitledFragment : Fragment() {
 
     protected lateinit var article: MutableList<Article>
-    protected lateinit var adapter: ArticleApiResponseAdapter
+    lateinit var adapter: ArticleApiResponseAdapter
     lateinit var fragmentGenericRV : RecyclerView
 
 
@@ -38,7 +39,7 @@ abstract class AbsTitledFragment : Fragment() {
 
         article = mutableListOf()
         fragmentGenericRV.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        adapter = ArticleApiResponseAdapter(article)
+        adapter = ArticleApiResponseAdapter(article, Glide.with(context))
         fragmentGenericRV.adapter = adapter
 
     }
