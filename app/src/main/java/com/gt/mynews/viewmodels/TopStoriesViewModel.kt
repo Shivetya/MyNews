@@ -40,7 +40,8 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                it.url)
                     }
             "science" -> useCase.getScience()?.results
                     ?.map {
@@ -52,7 +53,8 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                it.url)
                     }
             "technology" -> useCase.getTechnology()?.results
                     ?.map {
@@ -64,7 +66,8 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')))
+                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                it.url)
                     }
             else ->  null
         }

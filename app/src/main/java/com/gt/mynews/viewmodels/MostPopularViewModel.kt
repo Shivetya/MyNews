@@ -30,7 +30,8 @@ class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel(
                     Article(it.section,
                             it.media?.get(0)?.mediaMetadata?.get(0)?.url,
                             it.title,
-                            it.publishedDate)
+                            it.publishedDate,
+                            it.url)
                 }
         withContext(Dispatchers.Main) {
             _articles.value = articlesMP

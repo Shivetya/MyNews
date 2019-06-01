@@ -4,5 +4,6 @@ data class Article(
         val categoryArticle : String?,
         val imageUrl : String?,
         val articleTitle : String?,
-        val date : String?
+        val date : String?,
+        val url : String?
 )
