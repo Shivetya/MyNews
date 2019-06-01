@@ -54,6 +54,7 @@ class GenericViewModelTest {
                         desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
                         publishedDate = "2019-05-15T16684354"
                         title = "Yep, à tester aussi !"
+                        url = "Ceci est une URL"
                         multimedia = listOf(Multimedium())
                     },Result().apply {
                         section = "cheveux"
@@ -235,5 +236,18 @@ class GenericViewModelTest {
         //then
 
         assertEquals("2019-05-15", viewModel.articles.value?.get(1)?.date)
+    }
+
+    @Test
+    fun`should expose first article (articles Top Stories) with home - get URL`() = runBlockingTest {
+        //given
+        val viewModel = TopStoriesViewModel(useCase)
+
+        //when
+        viewModel.fetchArticles("home")
+
+        //then
+
+        assertEquals("Ceci est une URL", viewModel.articles.value?.get(0)?.url)
     }
 }
