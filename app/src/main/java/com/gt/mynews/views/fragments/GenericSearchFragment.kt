@@ -16,8 +16,9 @@ import com.gt.mynews.viewmodels.models.Article
  */
 class GenericSearchFragment : AbsTitledFragment() {
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        TODO("genericviewmodel to create")//ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
     }
 
     companion object{
@@ -42,12 +43,6 @@ class GenericSearchFragment : AbsTitledFragment() {
 
     override fun loadArticle() {
         TODO()
-    }
-
-    override fun setObserve() {
-        viewModel.articles
-                .observe(this, Observer {
-                    updateUI(it) })
     }
 
 }

@@ -1,7 +1,6 @@
 package com.gt.mynews.usecases
 
 import com.gt.mynews.data.ArticleApiResponse
-import com.gt.mynews.utils.ApiKeyGitIgnore
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

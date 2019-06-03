@@ -19,6 +19,6 @@ class ArticleApiResponse {
     var numResults: Int? = null
     @SerializedName("results")
     @Expose
-    var results: List<Result>? = null
+    lateinit var results: List<Result>
 
 }

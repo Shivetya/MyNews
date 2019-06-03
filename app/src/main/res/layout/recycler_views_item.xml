@@ -17,8 +17,7 @@
         app:layout_constraintBottom_toTopOf="@id/fragment_items_text_description"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/article_image"
-        android:src="@drawable/newyorktime_logo"/>
+        android:contentDescription="@string/article_image"/>
 
     <TextView
         android:id="@+id/fragment_items_text_title"

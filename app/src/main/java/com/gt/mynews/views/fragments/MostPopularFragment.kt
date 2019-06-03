@@ -1,6 +1,7 @@
 package com.gt.mynews.views.fragments
 
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,7 +16,8 @@ import com.gt.mynews.viewmodels.models.Article
  */
 class MostPopularFragment : AbsTitledFragment() {
 
-    private val viewModel by lazy {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(MostPopularViewModel::class.java)
     }
 
@@ -28,12 +30,6 @@ class MostPopularFragment : AbsTitledFragment() {
 
     override fun loadArticle() {
         viewModel.reloadArticles(null)
-    }
-
-    override fun setObserve() {
-        viewModel.articles
-                .observe(this, Observer {
-                    updateUI(it) })
     }
 
 }

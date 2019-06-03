@@ -13,9 +13,6 @@ import kotlinx.coroutines.withContext
 
 class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel() {
 
-    private val _articles = MutableLiveData<List<Article>>()
-    val articles: LiveData<List<Article>> = _articles
-
     private var currentJob: Job? = null
 
     override fun reloadArticles(keyword : String?){
@@ -32,11 +29,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
         val articlesTS = when(keyword){
             "home" -> useCase.getTopStories()?.results
                     ?.map {
-                        val image = if (it.multimedia!!.isNotEmpty()) {
-                            it.multimedia?.get(0)?.url
-                        } else {
-                            null
-                        }
+                        val image = it.multimedia?.firstOrNull()?.url
                         Article(it.section,
                                 image,
                                 it.title,
@@ -45,11 +38,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                     }
             "science" -> useCase.getScience()?.results
                     ?.map {
-                        val image = if (it.multimedia!!.isNotEmpty()) {
-                            it.multimedia?.get(0)?.url
-                        } else {
-                            null
-                        }
+                        val image = it.multimedia?.firstOrNull()?.url
                         Article(it.section,
                                 image,
                                 it.title,
@@ -58,11 +47,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                     }
             "technology" -> useCase.getTechnology()?.results
                     ?.map {
-                        val image = if (it.multimedia!!.isNotEmpty()) {
-                            it.multimedia?.get(0)?.url
-                        } else {
-                            null
-                        }
+                        val image = it.multimedia?.firstOrNull()?.url
                         Article(it.section,
                                 image,
                                 it.title,

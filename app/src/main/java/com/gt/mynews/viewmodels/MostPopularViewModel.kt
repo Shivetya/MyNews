@@ -9,8 +9,6 @@ import kotlinx.coroutines.*
 
 class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel() {
 
-    private val _articles = MutableLiveData<List<Article>>()
-    val articles: LiveData<List<Article>> = _articles
 
     private var currentJob: Job? = null
 

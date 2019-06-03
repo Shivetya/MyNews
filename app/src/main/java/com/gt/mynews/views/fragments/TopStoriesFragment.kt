@@ -15,7 +15,8 @@ import com.gt.mynews.viewmodels.models.Article
  */
 class TopStoriesFragment : AbsTitledFragment() {
 
-    private val viewModel by lazy {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
     }
 
@@ -40,11 +41,5 @@ class TopStoriesFragment : AbsTitledFragment() {
 
     override fun loadArticle() {
         viewModel.reloadArticles(arguments?.getString(KEY_KEYWORD))
-    }
-
-    override fun setObserve() {
-        viewModel.articles
-                .observe(this, Observer {
-                    updateUI(it) })
     }
 }
