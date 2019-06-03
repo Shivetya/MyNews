@@ -17,8 +17,8 @@ import com.gt.mynews.viewmodels.models.Article
 class GenericSearchFragment : AbsTitledFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
         super.onCreate(savedInstanceState)
-        TODO("genericviewmodel to create")//ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
     }
 
     companion object{

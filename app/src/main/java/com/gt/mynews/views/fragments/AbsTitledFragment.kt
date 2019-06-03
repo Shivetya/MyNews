@@ -1,23 +1,22 @@
 package com.gt.mynews.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.GenericViewModel
-import com.gt.mynews.viewmodels.TopStoriesViewModel
-import com.gt.mynews.viewmodels.ViewModelFactory
 import com.gt.mynews.viewmodels.models.Article
+import com.gt.mynews.views.activities.WebviewActivity
 import com.gt.mynews.views.adapters.ArticleApiResponseAdapter
 
-abstract class AbsTitledFragment : Fragment() {
+abstract class AbsTitledFragment : Fragment(), ArticleApiResponseAdapter.Listeners {
 
     protected lateinit var article: MutableList<Article>
     lateinit var adapter: ArticleApiResponseAdapter
@@ -50,7 +49,7 @@ abstract class AbsTitledFragment : Fragment() {
 
         article = mutableListOf()
         recyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        adapter = ArticleApiResponseAdapter(article, Glide.with(context))
+        adapter = ArticleApiResponseAdapter(article, Glide.with(context), this)
         recyclerView.adapter = adapter
 
     }
@@ -61,6 +60,10 @@ abstract class AbsTitledFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-
+    override fun onClickLaunchWebview(urlToLaunch: String) {
+        val intent = Intent(context, WebviewActivity::class.java)
+        intent.putExtra(WebviewActivity.KEY_URL, urlToLaunch)
+        context!!.startActivity(intent)
+    }
 
 }

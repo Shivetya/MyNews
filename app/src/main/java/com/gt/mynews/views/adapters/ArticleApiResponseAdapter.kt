@@ -1,6 +1,5 @@
 package com.gt.mynews.views.adapters
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.models.Article
-import com.gt.mynews.views.activities.WebviewActivity
 import kotlinx.android.synthetic.main.recycler_views_item.view.*
+import java.lang.ref.WeakReference
 
-class ArticleApiResponseAdapter(private val articlesResponse : List<Article>, private val glide : RequestManager)
+class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
+                                private val glide : RequestManager,
+                                private val callback: Listeners)
     : RecyclerView.Adapter<ArticleApiResponseAdapter.ArticleApiResponseViewHolder>() {
+
+    interface Listeners{
+        fun onClickLaunchWebview(urlToLaunch: String)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleApiResponseViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.recycler_views_item, parent, false)
 
-        return ArticleApiResponseViewHolder(view)
+        return ArticleApiResponseViewHolder(view, callback)
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +38,9 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>, pr
         holder.updateWithResponse(articlesResponse, position, this.glide)
     }
 
-    class ArticleApiResponseViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class ArticleApiResponseViewHolder(itemView : View,
+                                       private val callback: Listeners)
+        : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         private val textViewTitle: TextView = itemView.fragment_items_text_title
         private val textViewDate: TextView = itemView.fragment_items_text_date
@@ -55,10 +62,7 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>, pr
 
         override fun onClick(v: View?) {
 
-            val intent = Intent(v!!.context, WebviewActivity::class.java )
-            intent.putExtra(WebviewActivity.KEY_URL, url)
-
-            v!!.context.startActivity(intent)
+            callback.onClickLaunchWebview(url)
         }
 
     }

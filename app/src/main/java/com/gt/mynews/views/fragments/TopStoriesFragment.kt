@@ -16,8 +16,8 @@ import com.gt.mynews.viewmodels.models.Article
 class TopStoriesFragment : AbsTitledFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
         super.onCreate(savedInstanceState)
-        ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(TopStoriesViewModel::class.java)
     }
 
     companion object{

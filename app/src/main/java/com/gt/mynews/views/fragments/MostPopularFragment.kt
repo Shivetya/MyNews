@@ -17,8 +17,8 @@ import com.gt.mynews.viewmodels.models.Article
 class MostPopularFragment : AbsTitledFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(MostPopularViewModel::class.java)
         super.onCreate(savedInstanceState)
-        ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(MostPopularViewModel::class.java)
     }
 
     companion object{
