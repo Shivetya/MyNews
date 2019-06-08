@@ -64,16 +64,14 @@ class GenericViewModelTest {
     }
 
     val technologyResponse : ArticleApiResponse = ArticleApiResponse().apply {
-            results = listOf(Result().apply {
-                section = "lolilol"
-                publishedDate = "2019-05-15T06:14:38-04:00"
-                title = "Mouahahahahahahha"
-                multimedia = listOf(Multimedium())
-            },Result().apply {
-
-            })
+        results = listOf(Result().apply {
+            section = "lolilol"
+            publishedDate = "2019-05-15T06:14:38-04:00"
+            title = "Mouahahahahahahha"
+            multimedia = listOf(Multimedium())
+        }, Result().apply {
+        })
     }
-
 
     // region @Before initialization
     @Before
@@ -87,6 +85,41 @@ class GenericViewModelTest {
 
             override fun getTechnology(): ArticleApiResponse? = technologyResponse
 
+            override fun getSearch(keywordToSearch: String,
+                                   keywordFilter: String?,
+                                   beginDate: String?,
+                                   endDate: String?): ArticleApiResponse? {
+                return when(keywordToSearch){
+                    "panda" -> ArticleApiResponse().apply {
+                        response = Response().apply {
+                            docs = listOf(Doc().apply {
+                                webUrl = "Adresse url de l'article ici: panda.com"
+                                snippet = "titre de l'article ici : panda ici !"
+                                pubDate = "2019-05-15T06:14:38-04:00"
+                                sectionName = "Section ici ! Panda !!!!"
+                                multimedia = listOf(Multimedium().apply {
+                                    url = "url de l'image du panda ici !"
+                                })
+                            })
+                        }
+                    }
+                    "panda roux" -> ArticleApiResponse().apply {
+                        response = Response().apply {
+                            docs = listOf(Doc().apply {
+                                webUrl = "Adresse url de l'article ici: panda roux !"
+                                snippet = "titre de l'article ici, panda roux"
+                                pubDate = "2019-05-15T06:14:38-04:00"
+                                sectionName = "Section ici ! Panda Roux !"
+                                multimedia = listOf(Multimedium().apply {
+                                    url = "url de l'image ici ! Panda Roux"
+                                })
+                            })
+                        }
+                    }
+                    else -> null
+                }
+
+            }
         }
     }
 
@@ -301,5 +334,44 @@ class GenericViewModelTest {
         //then
 
         assertEquals(null.toString(), viewModel.articles.value?.get(0)?.date)
+    }
+
+    @Test
+    fun`should not crash and return null (articles Search) with random keyword - get date null`() = runBlockingTest {
+        //given
+        val viewModel = SearchViewModel(useCase)
+
+        //when
+        viewModel.fetchArticles("home", null, null, null)
+
+        //then
+
+        assertEquals(null.toString(), viewModel.articles.value?.get(0)?.date)
+    }
+
+    @Test
+    fun`should return title (articles Search) with panda keyword - get title`() = runBlockingTest {
+        //given
+        val viewModel = SearchViewModel(useCase)
+
+        //when
+        viewModel.fetchArticles("panda", null, null, null)
+
+        //then
+
+        assertEquals("titre de l'article ici : panda ici !", viewModel.articles.value?.get(0)?.date)
+    }
+
+    @Test
+    fun`should return image url (articles Search) with panda roux keyword - get url`() = runBlockingTest {
+        //given
+        val viewModel = SearchViewModel(useCase)
+
+        //when
+        viewModel.fetchArticles("panda roux", null, null, null)
+
+        //then
+
+        assertEquals("url de l'image ici ! Panda Roux", viewModel.articles.value?.get(0)?.date)
     }
 }
