@@ -17,6 +17,7 @@ class NytUseCaseImpl : NytUseCase {
         private var serviceMP : NytApi
         private var serviceS : NytApi
         private var serviceTS : NytApi
+        private var serviceSearch : NytApi
 
         init {
 
@@ -47,6 +48,7 @@ class NytUseCaseImpl : NytUseCase {
             serviceMP = retrofit.create(NytApi::class.java)
             serviceS = retrofit.create(NytApi::class.java)
             serviceTS = retrofit.create(NytApi::class.java)
+            serviceSearch = retrofit.create(NytApi::class.java)
         }
     }
 
@@ -64,5 +66,15 @@ class NytUseCaseImpl : NytUseCase {
 
     override fun getTechnology(): ArticleApiResponse? {
         return serviceTS.getTechnologyApi().execute().body()
+    }
+
+    override fun getSearch(keywordToSearch: String,
+                           keywordFilter: String?,
+                           beginDate: String?,
+                           endDate: String?): ArticleApiResponse? {
+
+        return serviceSearch.getSearchApi(keywordToSearch, keywordFilter, beginDate, endDate)
+                .execute()
+                .body()
     }
 }
