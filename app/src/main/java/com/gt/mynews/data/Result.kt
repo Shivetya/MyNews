@@ -44,10 +44,10 @@ class Result {
     @SerializedName("views")
     @Expose
     var views: Int? = null
-    @SerializedName("des_facet")
+    /**@SerializedName("des_facet")
     @Expose
     var desFacet: List<String>? = null
-    /**@SerializedName("org_facet")
+    @SerializedName("org_facet")
     @Expose
     var orgFacet: List<String>? = null
     @SerializedName("per_facet")

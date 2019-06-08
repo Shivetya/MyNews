@@ -1,19 +1,15 @@
 package com.gt.mynews.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.gt.mynews.data.Multimedium
 import com.gt.mynews.usecases.NytUseCase
+import com.gt.mynews.utils.Utils
 import com.gt.mynews.viewmodels.models.Article
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.joda.time.DateTime
 
 class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel() {
-
-    private var currentJob: Job? = null
 
     override fun reloadArticles(keyword : String?){
 
@@ -30,28 +26,44 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
             "home" -> useCase.getTopStories()?.results
                     ?.map {
                         val image = it.multimedia?.firstOrNull()?.url
+                        val date = if (it.publishedDate != null){
+                            DateTime.parse(it.publishedDate!!.substringBefore('T'), Utils.formatter)
+                        } else {
+                            null
+                        }
+
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                date.toString().substringBefore('T'),
                                 it.url)
                     }
             "science" -> useCase.getScience()?.results
                     ?.map {
                         val image = it.multimedia?.firstOrNull()?.url
+                        val date = if (it.publishedDate != null){
+                            DateTime.parse(it.publishedDate!!.substringBefore('T'), Utils.formatter)
+                        } else {
+                            null
+                        }
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                date.toString().substringBefore('T'),
                                 it.url)
                     }
             "technology" -> useCase.getTechnology()?.results
                     ?.map {
                         val image = it.multimedia?.firstOrNull()?.url
+                        val date = if (it.publishedDate != null){
+                            DateTime.parse(it.publishedDate!!.substringBefore('T'), Utils.formatter)
+                        } else {
+                            null
+                        }
                         Article(it.section,
                                 image,
                                 it.title,
-                                it.publishedDate?.substring(0,it.publishedDate!!.indexOf('T')),
+                                date.toString().substringBefore('T'),
                                 it.url)
                     }
             else ->  null
@@ -62,12 +74,4 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
         }
     }
 
-    override fun cancelJobIfActive(){
-
-        currentJob?.let {
-            if(it.isActive){
-                it.cancel()
-            }
-        }
-    }
 }

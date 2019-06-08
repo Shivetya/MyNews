@@ -1,5 +1,7 @@
 package com.gt.mynews.viewmodels
 
+import android.content.Context
+import android.content.res.Resources
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gt.mynews.data.*
 import com.gt.mynews.testutils.CoroutinesTestRule
@@ -11,6 +13,12 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import net.danlew.android.joda.JodaTimeAndroid
+import org.mockito.Mockito.`when`
+import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.Mockito.mock
+import java.io.InputStream
+
 
 @ExperimentalCoroutinesApi
 class GenericViewModelTest {
@@ -26,8 +34,7 @@ class GenericViewModelTest {
     val mostPopularResponse : ArticleApiResponse = ArticleApiResponse().apply {
             results = listOf(Result().apply {
                 section = "lolilol"
-                desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
-                publishedDate = "2019-05-15"
+                publishedDate = "2019-05-15T06:14:38-04:00"
                 title = "De$ vol€ur$ d'arg€nt vont €n prison !"
                 media = listOf(Medium().apply {
                     mediaMetadata = listOf(MediaMetadatum().apply {
@@ -40,8 +47,7 @@ class GenericViewModelTest {
     val topStoriesResponse : ArticleApiResponse = ArticleApiResponse().apply {
             results = listOf(Result().apply {
                 section = "lolilol"
-                desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
-                publishedDate = "2019-05-15T16684354"
+                publishedDate = "2019-05-05T06:14:38-04:00"
                 title = "Yep, à tester aussi !"
                 url = "Ceci est une URL"
                 multimedia = listOf(Multimedium())
@@ -51,8 +57,7 @@ class GenericViewModelTest {
     val scienceResponse : ArticleApiResponse = ArticleApiResponse().apply {
         results = listOf(Result().apply {
             section = "lolilol"
-            desFacet = listOf("Ici !", "Vraim€nt Ici !!!")
-            publishedDate = "2019-05-15T16684354"
+            publishedDate = "2019-05-15T06:14:38-04:00"
             title = "Des mots à tester"
             multimedia = listOf(Multimedium())
         },Result().apply {  })
@@ -61,8 +66,7 @@ class GenericViewModelTest {
     val technologyResponse : ArticleApiResponse = ArticleApiResponse().apply {
             results = listOf(Result().apply {
                 section = "lolilol"
-                desFacet = listOf("Ici ! ", "Vraim€nt Ici !!!")
-                publishedDate = "2019-05-15T16684354"
+                publishedDate = "2019-05-15T06:14:38-04:00"
                 title = "Mouahahahahahahha"
                 multimedia = listOf(Multimedium())
             },Result().apply {
@@ -86,11 +90,23 @@ class GenericViewModelTest {
         }
     }
 
+    //This fun is for mock context to allow init of jodatime in tests.
+    @Before
+    fun prepareTimeBeforeTests() {
+        val context = mock(Context::class.java)
+        val appContext = mock(Context::class.java)
+        val resources = mock(Resources::class.java)
+        `when`(resources.openRawResource(anyInt())).thenReturn(mock(InputStream::class.java))
+        `when`(appContext.resources).thenReturn(resources)
+        `when`(context.applicationContext).thenReturn(appContext)
+        JodaTimeAndroid.init(context)
+    }
+
     @Test
     fun `should expose list of models (articles Most Popular) - get date`() = runBlockingTest {
         //given
         mostPopularResponse.results[0].apply {
-            publishedDate = "2019-05-15"
+            publishedDate = "2019-05-15T06:14:38-04:00"
         }
         val viewModel = MostPopularViewModel(useCase)
 
@@ -104,7 +120,7 @@ class GenericViewModelTest {
     fun `should expose list of models (articles Most Popular) - get section`() = runBlockingTest {
         //given
         mostPopularResponse.results[0].apply {
-            desFacet = listOf("lolilol","demain")
+            section = "lolilol"
         }
         val viewModel = MostPopularViewModel(useCase)
 
@@ -151,14 +167,14 @@ class GenericViewModelTest {
     fun `should expose list of models (articles Most Popular) second article - get date`() = runBlockingTest {
         //given
         mostPopularResponse.results[1].apply {
-            publishedDate = "aujourd'hui"
+            publishedDate = "2019-06-04T06:14:38-04:00"
         }
         val viewModel = MostPopularViewModel(useCase)
 
         viewModel.fetchArticles("Bonjour")
 
         //then
-        assertEquals("aujourd'hui", viewModel.articles.value?.get(1)?.date)
+        assertEquals("2019-06-04", viewModel.articles.value?.get(1)?.date)
     }
 
     @Test
@@ -242,7 +258,7 @@ class GenericViewModelTest {
     fun`should expose second article (articles Top Stories) with technology - get second date`() = runBlockingTest {
         //given
         technologyResponse.results[1].apply {
-            publishedDate = "2019-05-15Tkjhvkv"
+            publishedDate = "2019-06-04T06:14:38-04:00"
         }
         val viewModel = TopStoriesViewModel(useCase)
 
@@ -251,7 +267,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals("2019-05-15", viewModel.articles.value?.get(1)?.date)
+        assertEquals("2019-06-04", viewModel.articles.value?.get(1)?.date)
     }
 
     @Test
@@ -284,6 +300,6 @@ class GenericViewModelTest {
 
         //then
 
-        assertNull( viewModel.articles.value?.get(0)?.date)
+        assertEquals(null.toString(), viewModel.articles.value?.get(0)?.date)
     }
 }
