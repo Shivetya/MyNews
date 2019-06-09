@@ -333,7 +333,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals(null.toString(), viewModel.articles.value?.get(0)?.date)
+        assertNull( viewModel.articles.value?.get(0)?.date)
     }
 
     @Test
@@ -346,7 +346,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals(null, viewModel.articles.value?.get(0)?.date)
+        assertNull(viewModel.articles.value?.get(0)?.date)
     }
 
     @Test

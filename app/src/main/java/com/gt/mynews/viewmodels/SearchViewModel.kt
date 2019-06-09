@@ -40,7 +40,7 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
             Article(it.sectionName,
                     image,
                     it.snippet,
-                    date.toString().substringBefore('T'),
+                    date?.toString()?.substringBefore('T'),
                     it.webUrl)
         }
 

@@ -41,7 +41,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                date.toString().substringBefore('T'),
+                                date?.toString()?.substringBefore('T'),
                                 it.url)
                     }
             "science" -> useCase.getScience()?.results
@@ -55,7 +55,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                date.toString().substringBefore('T'),
+                                date?.toString()?.substringBefore('T'),
                                 it.url)
                     }
             "technology" -> useCase.getTechnology()?.results
@@ -69,7 +69,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
                         Article(it.section,
                                 image,
                                 it.title,
-                                date.toString().substringBefore('T'),
+                                date?.toString()?.substringBefore('T'),
                                 it.url)
                     }
             else ->  null
