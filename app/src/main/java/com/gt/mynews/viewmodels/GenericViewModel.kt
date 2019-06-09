@@ -15,8 +15,14 @@ abstract class GenericViewModel : ViewModel() {
 
     var currentJob: Job? = null
 
-    abstract fun reloadArticles(keyword: String?)
-    abstract suspend fun fetchArticles(keyword: String?)
+    abstract fun reloadArticles(keyword: String?,
+                                keywordFilter: String?,
+                                beginDate: String?,
+                                endDate: String?)
+    abstract suspend fun fetchArticles(keyword: String?,
+                                       keywordFilter: String?,
+                                       beginDate: String?,
+                                       endDate: String?)
 
     fun cancelJobIfActive(){
 

@@ -10,16 +10,22 @@ import org.joda.time.DateTime
 class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel() {
 
 
-    override fun reloadArticles(keyword: String?) {
+    override fun reloadArticles(keyword: String?,
+                                keywordFilter: String?,
+                                beginDate: String?,
+                                endDate: String?) {
 
         cancelJobIfActive()
 
         currentJob = viewModelScope.launch(Dispatchers.IO) {
-            fetchArticles(null)
+            fetchArticles(null, null, null, null)
         }
     }
 
-    override suspend fun fetchArticles(keyword: String?) {
+    override suspend fun fetchArticles(keyword: String?,
+                                       keywordFilter: String?,
+                                       beginDate: String?,
+                                       endDate: String?) {
 
         val articlesMP = useCase.getMostPopular()?.results
                 ?.map {

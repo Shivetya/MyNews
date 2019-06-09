@@ -29,7 +29,7 @@ class MostPopularFragment : AbsTitledFragment() {
     override fun getKeyword(): String? = getString(R.string.most_popular)
 
     override fun loadArticle() {
-        viewModel.reloadArticles(null)
+        viewModel.reloadArticles(null, null, null, null)
     }
 
 }

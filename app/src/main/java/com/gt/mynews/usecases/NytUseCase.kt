@@ -8,7 +8,7 @@ interface NytUseCase{
     fun getTopStories() : ArticleApiResponse?
     fun getScience() : ArticleApiResponse?
     fun getTechnology() : ArticleApiResponse?
-    fun getSearch(keywordToSearch : String,
+    fun getSearch(keywordToSearch : String?,
                   keywordFilter : String?,
                   beginDate : String?,
                   endDate : String?) : ArticleApiResponse?

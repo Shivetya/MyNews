@@ -68,7 +68,7 @@ class NytUseCaseImpl : NytUseCase {
         return serviceTS.getTechnologyApi().execute().body()
     }
 
-    override fun getSearch(keywordToSearch: String,
+    override fun getSearch(keywordToSearch: String?,
                            keywordFilter: String?,
                            beginDate: String?,
                            endDate: String?): ArticleApiResponse? {

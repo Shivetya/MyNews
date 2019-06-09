@@ -85,7 +85,7 @@ class GenericViewModelTest {
 
             override fun getTechnology(): ArticleApiResponse? = technologyResponse
 
-            override fun getSearch(keywordToSearch: String,
+            override fun getSearch(keywordToSearch: String?,
                                    keywordFilter: String?,
                                    beginDate: String?,
                                    endDate: String?): ArticleApiResponse? {
@@ -143,7 +143,7 @@ class GenericViewModelTest {
         }
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticles(null)
+        viewModel.fetchArticles(null, null, null ,null)
 
         //then
         assertEquals("2019-05-15", viewModel.articles.value?.get(0)?.date)
@@ -157,7 +157,7 @@ class GenericViewModelTest {
         }
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticles("bonjour")
+        viewModel.fetchArticles("bonjour", null, null ,null)
 
         //then
 
@@ -176,7 +176,7 @@ class GenericViewModelTest {
         }
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticles(null)
+        viewModel.fetchArticles(null,  null, null ,null)
 
         //then
         assertEquals("Que de chemin pour cet URL !", viewModel.articles.value?.get(0)?.imageUrl)
@@ -190,7 +190,7 @@ class GenericViewModelTest {
         }
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticles(null)
+        viewModel.fetchArticles(null, null, null ,null)
 
         //then
         assertEquals("De\$ vol€ur\$ d'arg€nt vont €n prison !", viewModel.articles.value?.get(0)?.articleTitle)
@@ -204,7 +204,7 @@ class GenericViewModelTest {
         }
         val viewModel = MostPopularViewModel(useCase)
 
-        viewModel.fetchArticles("Bonjour")
+        viewModel.fetchArticles("Bonjour", null, null ,null)
 
         //then
         assertEquals("2019-06-04", viewModel.articles.value?.get(1)?.date)
@@ -219,7 +219,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("science")
+        viewModel.fetchArticles("science", null, null ,null)
 
         //then
 
@@ -235,7 +235,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("technology")
+        viewModel.fetchArticles("technology", null, null ,null)
 
         //then
 
@@ -251,7 +251,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("home")
+        viewModel.fetchArticles("home", null, null ,null)
 
         //then
 
@@ -264,7 +264,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("Lol")
+        viewModel.fetchArticles("Lol", null, null ,null)
 
         //then
 
@@ -280,7 +280,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("science")
+        viewModel.fetchArticles("science", null, null ,null)
 
         //then
 
@@ -296,7 +296,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("technology")
+        viewModel.fetchArticles("technology", null, null ,null)
 
         //then
 
@@ -312,7 +312,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("home")
+        viewModel.fetchArticles("home", null, null ,null)
 
         //then
 
@@ -329,7 +329,7 @@ class GenericViewModelTest {
         val viewModel = TopStoriesViewModel(useCase)
 
         //when
-        viewModel.fetchArticles("home")
+        viewModel.fetchArticles("home", null, null ,null)
 
         //then
 
@@ -346,7 +346,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals(null.toString(), viewModel.articles.value?.get(0)?.date)
+        assertEquals(null, viewModel.articles.value?.get(0)?.date)
     }
 
     @Test
@@ -359,7 +359,7 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals("titre de l'article ici : panda ici !", viewModel.articles.value?.get(0)?.date)
+        assertEquals("titre de l'article ici : panda ici !", viewModel.articles.value?.get(0)?.articleTitle)
     }
 
     @Test
@@ -372,6 +372,6 @@ class GenericViewModelTest {
 
         //then
 
-        assertEquals("url de l'image ici ! Panda Roux", viewModel.articles.value?.get(0)?.date)
+        assertEquals("url de l'image ici ! Panda Roux", viewModel.articles.value?.get(0)?.imageUrl)
     }
 }

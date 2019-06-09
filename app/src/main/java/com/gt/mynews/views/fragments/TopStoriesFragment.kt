@@ -40,6 +40,6 @@ class TopStoriesFragment : AbsTitledFragment() {
     override fun getKeyword(): String? = arguments?.getString(KEY_KEYWORD)
 
     override fun loadArticle() {
-        viewModel.reloadArticles(arguments?.getString(KEY_KEYWORD))
+        viewModel.reloadArticles(arguments?.getString(KEY_KEYWORD),null, null, null)
     }
 }

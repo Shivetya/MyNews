@@ -21,7 +21,7 @@ interface NytApi {
     fun getTechnologyApi() : Call<ArticleApiResponse>
 
     @GET("/svc/search/v2/articlesearch.json")
-    fun getSearchApi(@Query("q")keywordToSearch : String,
+    fun getSearchApi(@Query("q")keywordToSearch : String?,
                      @Query("fq")keywordFilter : String?,
                      @Query("begin_date")beginDate : String?,
                      @Query("end_date")endDate : String?) : Call<ArticleApiResponse>
