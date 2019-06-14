@@ -1,7 +1,9 @@
 package com.gt.mynews.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
@@ -43,5 +45,19 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.tabMode = TabLayout.MODE_FIXED
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when(item!!.itemId){
+            R.id.menu_activity_main_search -> launchSearchActivity()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
+    }
+
+    private fun launchSearchActivity(){
+        val intent = Intent(this, SearchActivity::class.java)
+        this.startActivity(intent)
     }
 }
