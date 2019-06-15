@@ -90,7 +90,7 @@ class GenericViewModelTest {
                                    beginDate: String?,
                                    endDate: String?): ArticleApiResponse? {
                 return when(keywordToSearch){
-                    "panda" -> ArticleApiResponse().apply {
+                    "(\"panda\")" -> ArticleApiResponse().apply {
                         response = Response().apply {
                             docs = listOf(Doc().apply {
                                 webUrl = "Adresse url de l'article ici: panda.com"
@@ -103,7 +103,7 @@ class GenericViewModelTest {
                             })
                         }
                     }
-                    "panda roux" -> ArticleApiResponse().apply {
+                    "(\"panda roux\")" -> ArticleApiResponse().apply {
                         response = Response().apply {
                             docs = listOf(Doc().apply {
                                 webUrl = "Adresse url de l'article ici: panda roux !"
@@ -376,42 +376,42 @@ class GenericViewModelTest {
     }
 
     @Test
-    fun `field "q" should be in format ("keyword1 keyword2")`() = runBlockingTest {
+    fun `field q should be in format (keyword1 keyword2) with quotes`() = runBlockingTest {
         val viewModel = SearchViewModel(useCase)
 
         viewModel.fetchArticles("bonjour chat", "science", "15-06-2019","16-06-2019")
 
-        assertEquals("(\"bonjour chat\")", viewModel.keyword)
+        assertEquals("(\"bonjour chat\")", viewModel.mutableKeyword.value)
 
     }
 
     @Test
-    fun `field fq should be in format "news-desk'colon'("fq1" "fq2")"`() = runBlockingTest {
+    fun `field fq should be in format news desk colon(fq1 fq2) with quotes`() = runBlockingTest {
         val viewModel = SearchViewModel(useCase)
 
-        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+        viewModel.fetchArticles("bonjour chat", "\"science\" \"technology\"", "15-06-2019","16-06-2019")
 
-        assertEquals("new-desk:(\"science\" \"technology\")", viewModel.filterKeyword)
+        assertEquals("news-desk:(\"science\" \"technology\")", viewModel.mutableFilterKeyword.value)
 
     }
 
     @Test
-    fun `field begindate should be in format "yyyyMMdd"`() = runBlockingTest {
+    fun `field begindate should be in format yyyyMMdd`() = runBlockingTest {
         val viewModel = SearchViewModel(useCase)
 
-        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+        viewModel.fetchArticles("bonjour chat", "\"science\" \"technology\"", "15-06-2019","16-06-2019")
 
-        assertEquals("20190615", viewModel.beginDate)
+        assertEquals("20190615", viewModel.mutableBeginDate.value)
 
     }
 
     @Test
-    fun `field enddate should be in format "yyyyMMdd"`() = runBlockingTest {
+    fun `field enddate should be in format yyyyMMdd`() = runBlockingTest {
         val viewModel = SearchViewModel(useCase)
 
-        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+        viewModel.fetchArticles("bonjour chat", "\"science\" \"technology\"", "15-06-2019","16-06-2019")
 
-        assertEquals("20190616", viewModel.endDate)
+        assertEquals("20190616", viewModel.mutableEndDate.value)
 
     }
 }

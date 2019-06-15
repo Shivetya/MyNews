@@ -37,7 +37,7 @@ class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel(
                     Article(it.section,
                             it.media?.get(0)?.mediaMetadata?.get(0)?.url,
                             it.title,
-                            date?.toString()?.substringBefore('T'),
+                            date?.toString("yyyy-MM-dd"),
                             it.url)
                 }
         withContext(Dispatchers.Main) {
