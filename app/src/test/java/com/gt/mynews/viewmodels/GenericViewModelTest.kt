@@ -374,4 +374,44 @@ class GenericViewModelTest {
 
         assertEquals("url de l'image ici ! Panda Roux", viewModel.articles.value?.get(0)?.imageUrl)
     }
+
+    @Test
+    fun `field "q" should be in format ("keyword1 keyword2")`() = runBlockingTest {
+        val viewModel = SearchViewModel(useCase)
+
+        viewModel.fetchArticles("bonjour chat", "science", "15-06-2019","16-06-2019")
+
+        assertEquals("(\"bonjour chat\")", viewModel.keyword)
+
+    }
+
+    @Test
+    fun `field fq should be in format "news-desk'colon'("fq1" "fq2")"`() = runBlockingTest {
+        val viewModel = SearchViewModel(useCase)
+
+        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+
+        assertEquals("new-desk:(\"science\" \"technology\")", viewModel.filterKeyword)
+
+    }
+
+    @Test
+    fun `field begindate should be in format "yyyyMMdd"`() = runBlockingTest {
+        val viewModel = SearchViewModel(useCase)
+
+        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+
+        assertEquals("20190615", viewModel.beginDate)
+
+    }
+
+    @Test
+    fun `field enddate should be in format "yyyyMMdd"`() = runBlockingTest {
+        val viewModel = SearchViewModel(useCase)
+
+        viewModel.fetchArticles("bonjour chat", "science technology", "15-06-2019","16-06-2019")
+
+        assertEquals("20190616", viewModel.endDate)
+
+    }
 }
