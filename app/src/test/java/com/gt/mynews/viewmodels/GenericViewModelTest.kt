@@ -391,7 +391,7 @@ class GenericViewModelTest {
 
         viewModel.fetchArticles("bonjour chat", "\"science\" \"technology\"", "15-06-2019","16-06-2019")
 
-        assertEquals("news-desk:(\"science\" \"technology\")", viewModel.mutableFilterKeyword.value)
+        assertEquals("news_desk:(\"science\" \"technology\")", viewModel.mutableFilterKeyword.value)
 
     }
 

@@ -11,13 +11,12 @@ class ViewModelFactory private constructor(private val nytUseCase: NytUseCase) :
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
 
-        if(modelClass.isAssignableFrom(MostPopularViewModel::class.java)){
-            return MostPopularViewModel(nytUseCase) as T
+        return when {
+            modelClass.isAssignableFrom(MostPopularViewModel::class.java) -> MostPopularViewModel(nytUseCase) as T
+            modelClass.isAssignableFrom(TopStoriesViewModel::class.java) -> TopStoriesViewModel(nytUseCase) as T
+            modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(nytUseCase) as T
+            else -> throw IllegalArgumentException("Wrong UseCase Parameter")
         }
-        else if(modelClass.isAssignableFrom(TopStoriesViewModel::class.java)){
-            return TopStoriesViewModel(nytUseCase) as T
-        }
-        throw IllegalArgumentException("Wrong UseCase Parameter")
     }
 
     companion object{

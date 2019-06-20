@@ -34,15 +34,16 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
                                        beginDate: String?,
                                        endDate: String?) {
 
-        mutableKeyword.value = transformKeywordToQueryReady(keyword)
-        mutableFilterKeyword.value = transformKeywordFilterToQueryReady(keywordFilter)
-        mutableBeginDate.value = transformDateToQueryReady(beginDate)
-        mutableEndDate.value = transformDateToQueryReady(endDate)
 
-        val articleSearch = useCase.getSearch(mutableKeyword.value
-                , mutableFilterKeyword.value
-                , mutableBeginDate.value
-                , mutableEndDate.value)
+        val keywordQueryReady = transformKeywordToQueryReady(keyword)
+        val keywordFilterQueryReady = transformKeywordFilterToQueryReady(keywordFilter)
+        val beginDateQueryReady = transformDateToQueryReady(beginDate)
+        val endDateQueryReady = transformDateToQueryReady(endDate)
+
+        val articleSearch = useCase.getSearch(keywordQueryReady
+                , keywordFilterQueryReady
+                , beginDateQueryReady
+                , endDateQueryReady)
                 ?.response
                 ?.docs?.map {
             val image = it.multimedia?.firstOrNull()?.url
@@ -60,6 +61,8 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
 
         withContext(Dispatchers.Main){
             _articles.value = articleSearch
+            //this line is only to test if funs transformToQueryReady are returning in good format
+            putQueryReadyParamsToLiveDatasForTests(keywordQueryReady,keywordFilterQueryReady,beginDateQueryReady,endDateQueryReady)
         }
     }
 
@@ -74,7 +77,7 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
 
     private fun transformKeywordFilterToQueryReady(keywordFilter: String?) : String?{
         return if(keywordFilter != null){
-            "news-desk:($keywordFilter)"
+            "news_desk:($keywordFilter)"
         }
         else {
             null
@@ -88,5 +91,12 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
         else{
             null
         }
+    }
+
+    private fun putQueryReadyParamsToLiveDatasForTests(keyword: String?, keywordFilter: String?, beginDate: String?, endDate: String?){
+        mutableKeyword.value = keyword
+        mutableFilterKeyword.value = keywordFilter
+        mutableBeginDate.value = beginDate
+        mutableEndDate.value = endDate
     }
 }

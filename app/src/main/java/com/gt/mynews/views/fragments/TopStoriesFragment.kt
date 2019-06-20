@@ -3,11 +3,9 @@ package com.gt.mynews.views.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.gt.mynews.viewmodels.TopStoriesViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
-import com.gt.mynews.viewmodels.models.Article
 
 /**
  * A simple [Fragment] subclass.
