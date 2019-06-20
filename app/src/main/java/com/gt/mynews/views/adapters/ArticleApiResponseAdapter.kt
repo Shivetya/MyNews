@@ -1,5 +1,6 @@
 package com.gt.mynews.views.adapters
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,8 +57,13 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
             textViewTitle.text = articles[position].categoryArticle
             textViewDate.text = articles[position].date
             textViewDescription.text = articles[position].articleTitle
-            glide.load(articles[position].imageUrl).into(imageViewArticle)
             url = articles[position].url!!
+
+            if (articles[position].imageUrl == null || !articles[position].imageUrl!!.contains("http")){
+                glide.load(R.drawable.newyorktime_logo).into(imageViewArticle)
+            } else{
+                glide.load(articles[position].imageUrl).into(imageViewArticle)
+            }
         }
 
         override fun onClick(v: View?) {
