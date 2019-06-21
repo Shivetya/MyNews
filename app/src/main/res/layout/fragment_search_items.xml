@@ -6,25 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".views.activities.SearchActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_search_textinputlayout_keyword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/fragment_search_edittext_keyword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/keyword"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            tools:ignore="UnusedAttribute" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    <include
+        layout="@layout/edit_text_search_query"/>
 
     <LinearLayout
         android:id="@+id/linear_layout_dates"
@@ -82,113 +65,8 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_checkboxes_root"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linear_layout_dates">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_arts_1"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/arts"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout_dates" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_business_2"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/business"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_search_checkbox_arts_1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_entrepreneurs_3"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/entrepreneurs"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_search_checkbox_business_2" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_politics_4"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/politics"
-                app:layout_constraintLeft_toRightOf="@id/fragment_search_checkbox_arts_1"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout_dates" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_sports_5"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/sports"
-                app:layout_constraintLeft_toRightOf="@id/fragment_search_checkbox_arts_1"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_search_checkbox_politics_4" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/fragment_search_checkbox_travel_6"
-                android:layout_width="0dp"
-                app:layout_widthPercent="50%"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:layout_weight="1"
-                android:text="@string/travel"
-                app:layout_constraintLeft_toRightOf="@id/fragment_search_checkbox_arts_1"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_search_checkbox_sports_5" />
-
-        </LinearLayout>
-    </LinearLayout>
+    <include
+        layout="@layout/checkboxes"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_search_button_search"
