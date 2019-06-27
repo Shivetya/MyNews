@@ -57,14 +57,19 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         addListenersToCheckBoxes()
 
         view.findViewById<MaterialButton>(R.id.fragment_search_button_search).setOnClickListener {
-            launchSearch(mKeyword, mKeywordFilter?.joinToString(" "), mEndDate, mBeginDate)
+            val keywordF = if(mKeywordFilter!!.isEmpty()){
+                null
+            } else{
+                mKeywordFilter!!.joinToString(" ")
+            }
+            launchSearch(mKeyword, keywordF, mEndDate, mBeginDate)
         }
 
     }
 
     private fun addListenerToTextInputEditTextKeyword(){
 
-        view!!.findViewById<EditText>(R.id.fragment_search_edittext_keyword).addTextChangedListener{
+        view!!.findViewById<EditText>(R.id.edittext_keyword).addTextChangedListener{
             mKeyword = "$it"
         }
     }

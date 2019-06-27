@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureToolbar() {
 
-        val toolbar = findViewById<Toolbar>(R.id.activity_main_toolbar)
+        val toolbar = findViewById<Toolbar>(R.id.activity_toolbar)
         setSupportActionBar(toolbar)
     }
 

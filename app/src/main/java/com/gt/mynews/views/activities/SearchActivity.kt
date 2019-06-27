@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar
 import com.gt.mynews.R
 import com.gt.mynews.views.fragments.GenericSearchFragment
 import com.gt.mynews.views.fragments.SearchItemsFragment
-import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity(), SearchItemsFragment.ListenerSearch {
 
@@ -19,7 +18,7 @@ class SearchActivity : AppCompatActivity(), SearchItemsFragment.ListenerSearch {
     }
 
     private fun configureToolbar(){
-        val toolbar = activity_search_toolbar as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.activity_toolbar)
 
         setSupportActionBar(toolbar)
 
