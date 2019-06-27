@@ -8,16 +8,19 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="false">
-        <activity android:name=".views.activities.SearchActivity"
-            android:parentActivityName=".views.activities.MainActivity">
-        </activity>
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".views.activities.NotificationActivity"
+            android:parentActivityName=".views.activities.MainActivity" />
+        <activity
+            android:name=".views.activities.SearchActivity"
+            android:parentActivityName=".views.activities.MainActivity" />
         <activity android:name=".views.activities.WebviewActivity" />
         <activity android:name=".views.activities.MainActivity">
             <intent-filter>
