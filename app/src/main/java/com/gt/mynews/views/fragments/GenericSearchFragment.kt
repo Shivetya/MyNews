@@ -25,13 +25,13 @@ class GenericSearchFragment : AbsTitledFragment() {
         private const val BEGIN_DATE = "BEGIN_DATE"
         private const val END_DATE = "END_DATE"
 
-        fun newInstance(keyWord : String?, keywordFilter: String?, beginDate: String?, endDate: String?) : GenericSearchFragment {
+        fun newInstance(keyWord : String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?) : GenericSearchFragment {
 
             val frag = GenericSearchFragment()
 
             val args = Bundle(4)
             args.putString(KEY_KEYWORD, keyWord)
-            args.putString(KEYWORD_FILTER, keywordFilter)
+            args.putStringArrayList(KEYWORD_FILTER, keywordFilter)
             args.putString(BEGIN_DATE, beginDate)
             args.putString(END_DATE, endDate)
 
@@ -46,7 +46,7 @@ class GenericSearchFragment : AbsTitledFragment() {
 
     override fun loadArticle() {
         viewModel.reloadArticles(arguments?.getString(KEY_KEYWORD),
-                arguments?.getString(KEYWORD_FILTER),
+                arguments?.getStringArrayList(KEYWORD_FILTER),
                 arguments?.getString(BEGIN_DATE),
                 arguments?.getString(END_DATE))
     }

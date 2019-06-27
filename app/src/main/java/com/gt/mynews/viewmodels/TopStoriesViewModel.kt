@@ -12,7 +12,7 @@ import org.joda.time.DateTime
 class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel() {
 
     override fun reloadArticles(keyword: String?,
-                                keywordFilter: String?,
+                                keywordFilter: ArrayList<String>?,
                                 beginDate: String?,
                                 endDate: String?){
 
@@ -24,7 +24,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
     }
 
     override suspend fun fetchArticles(keyword: String?,
-                                       keywordFilter: String?,
+                                       keywordFilter: ArrayList<String>?,
                                        beginDate: String?,
                                        endDate: String?){
 

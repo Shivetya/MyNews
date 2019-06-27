@@ -19,12 +19,13 @@ import com.gt.mynews.viewmodels.SearchViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_search_items.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SearchItemsFragment : Fragment(), View.OnClickListener {
 
     interface ListenerSearch{
-        fun launchSearch(keyword: String?, keywordFilter: String?, beginDate: String?, endDate: String?)
+        fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?)
     }
 
     private lateinit var viewModel : GenericViewModel
@@ -32,7 +33,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
     private var mKeyword : String? = null
     private var mBeginDate : String? = null
     private var mEndDate : String? = null
-    private var mKeywordFilter : MutableList<String>? = mutableListOf()
+    private var mKeywordFilter : ArrayList<String> = ArrayList()
 
     companion object {
         fun newInstance() : SearchItemsFragment {
@@ -57,12 +58,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         addListenersToCheckBoxes()
 
         view.findViewById<MaterialButton>(R.id.fragment_search_button_search).setOnClickListener {
-            val keywordF = if(mKeywordFilter!!.isEmpty()){
-                null
-            } else{
-                mKeywordFilter!!.joinToString(" ")
-            }
-            launchSearch(mKeyword, keywordF, mEndDate, mBeginDate)
+            launchSearch(mKeyword, mKeywordFilter, mEndDate, mBeginDate)
         }
 
     }
@@ -126,34 +122,34 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
 
             when (v.id){
                 R.id.fragment_search_checkbox_arts_1 -> {
-                    if(checked) mKeywordFilter?.add("\"arts\"")
-                    else mKeywordFilter?.remove("\"arts\"")
+                    if(checked) mKeywordFilter.add("\"arts\"")
+                    else mKeywordFilter.remove("\"arts\"")
                 }
                 R.id.fragment_search_checkbox_business_2 ->{
-                    if(checked) mKeywordFilter?.add("\"business\"")
-                    else mKeywordFilter?.remove("\"business\"")
+                    if(checked) mKeywordFilter.add("\"business\"")
+                    else mKeywordFilter.remove("\"business\"")
                 }
                 R.id.fragment_search_checkbox_entrepreneurs_3 ->{
-                    if(checked) mKeywordFilter?.add("\"entrepreneurs\"")
-                    else mKeywordFilter?.remove("\"entrepreneurs\"")
+                    if(checked) mKeywordFilter.add("\"entrepreneurs\"")
+                    else mKeywordFilter.remove("\"entrepreneurs\"")
                 }
                 R.id.fragment_search_checkbox_politics_4 ->{
-                    if(checked) mKeywordFilter?.add("\"politics\"")
-                    else mKeywordFilter?.remove("\"politics\"")
+                    if(checked) mKeywordFilter.add("\"politics\"")
+                    else mKeywordFilter.remove("\"politics\"")
                 }
                 R.id.fragment_search_checkbox_sports_5 ->{
-                    if(checked) mKeywordFilter?.add("\"sports\"")
-                    else mKeywordFilter?.remove("\"sports\"")
+                    if(checked) mKeywordFilter.add("\"sports\"")
+                    else mKeywordFilter.remove("\"sports\"")
                 }
                 R.id.fragment_search_checkbox_travel_6 ->{
-                    if(checked) mKeywordFilter?.add("\"travel\"")
-                    else mKeywordFilter?.remove("\"travel\"")
+                    if(checked) mKeywordFilter.add("\"travel\"")
+                    else mKeywordFilter.remove("\"travel\"")
                 }
             }
         }
     }
 
-    private fun launchSearch(keyword: String?, keywordFilter: String?, beginDate: String?, endDate: String?){
+    private fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?){
         val callback = activity as ListenerSearch
 
         callback.launchSearch(keyword, keywordFilter, beginDate, endDate)

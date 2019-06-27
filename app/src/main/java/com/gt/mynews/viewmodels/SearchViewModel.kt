@@ -1,6 +1,6 @@
 package com.gt.mynews.viewmodels
 
-import androidx.lifecycle.MutableLiveData
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.viewModelScope
 import com.gt.mynews.usecases.NytUseCase
 import com.gt.mynews.utils.Utils
@@ -12,14 +12,8 @@ import org.joda.time.DateTime
 
 class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
 
-    //these 4 mutablesLiveData are only here to test the defferents field in the query.
-    val mutableKeyword = MutableLiveData<String>()
-    val mutableFilterKeyword = MutableLiveData<String>()
-    val mutableBeginDate = MutableLiveData<String>()
-    val mutableEndDate = MutableLiveData<String>()
-
     override fun reloadArticles(keyword: String?,
-                                keywordFilter: String?,
+                                keywordFilter: ArrayList<String>?,
                                 beginDate: String?,
                                 endDate: String?) {
         cancelJobIfActive()
@@ -30,10 +24,9 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
     }
 
     override suspend fun fetchArticles(keyword: String?,
-                                       keywordFilter: String?,
+                                       keywordFilter: ArrayList<String>?,
                                        beginDate: String?,
                                        endDate: String?) {
-
 
         val keywordQueryReady = transformKeywordToQueryReady(keyword)
         val keywordFilterQueryReady = transformKeywordFilterToQueryReady(keywordFilter)
@@ -61,12 +54,11 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
 
         withContext(Dispatchers.Main){
             _articles.value = articleSearch
-            //this line is only to test if funs transformToQueryReady are returning in good format
-            putQueryReadyParamsToLiveDatasForTests(keywordQueryReady,keywordFilterQueryReady,beginDateQueryReady,endDateQueryReady)
         }
     }
 
-    private fun transformKeywordToQueryReady(keyword: String?) : String?{
+    @VisibleForTesting
+    internal fun transformKeywordToQueryReady(keyword: String?) : String?{
         return if (keyword != null){
             "(\"$keyword\")"
         }
@@ -75,28 +67,23 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
         }
     }
 
-    private fun transformKeywordFilterToQueryReady(keywordFilter: String?) : String?{
-        return if(keywordFilter != null){
-            "news_desk:($keywordFilter)"
+    @VisibleForTesting
+    internal fun transformKeywordFilterToQueryReady(keywordFilter: ArrayList<String>?) : String?{
+        return if(keywordFilter != null && keywordFilter.isNotEmpty() ){
+            "news_desk:(${keywordFilter.joinToString(" ")})"
         }
         else {
             null
         }
     }
 
-    private fun transformDateToQueryReady(date : String?) : String?{
+    @VisibleForTesting
+    internal fun transformDateToQueryReady(date : String?) : String?{
         return if(date != null){
             DateTime.parse(date, Utils.formatterToQuery).toString("yyyyMMdd")
         }
         else{
             null
         }
-    }
-
-    private fun putQueryReadyParamsToLiveDatasForTests(keyword: String?, keywordFilter: String?, beginDate: String?, endDate: String?){
-        mutableKeyword.value = keyword
-        mutableFilterKeyword.value = keywordFilter
-        mutableBeginDate.value = beginDate
-        mutableEndDate.value = endDate
     }
 }

@@ -11,7 +11,7 @@ class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel(
 
 
     override fun reloadArticles(keyword: String?,
-                                keywordFilter: String?,
+                                keywordFilter: ArrayList<String>?,
                                 beginDate: String?,
                                 endDate: String?) {
 
@@ -23,7 +23,7 @@ class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel(
     }
 
     override suspend fun fetchArticles(keyword: String?,
-                                       keywordFilter: String?,
+                                       keywordFilter: ArrayList<String>?,
                                        beginDate: String?,
                                        endDate: String?) {
 

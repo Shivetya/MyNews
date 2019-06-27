@@ -39,7 +39,7 @@ class SearchActivity : AppCompatActivity(), SearchItemsFragment.ListenerSearch {
         }
     }
 
-    override fun launchSearch(keyword: String?, keywordFilter: String?, beginDate: String?, endDate: String?) {
+    override fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?) {
         supportFragmentManager.beginTransaction()
                 .replace(R.id.activity_search_framelayout, GenericSearchFragment.newInstance(keyword, keywordFilter, beginDate, endDate))
                 .commit()
