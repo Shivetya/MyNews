@@ -387,7 +387,7 @@ class GenericViewModelTest {
     fun `field fq should be in format news desk colon(fq1 fq2) with quotes`() = runBlockingTest {
         val viewModel = SearchViewModel(useCase)
 
-        val arrayListKeywordFilter = arrayListOf("\"science\" \"technology\"")
+        val arrayListKeywordFilter = arrayListOf("\"science\"", "\"technology\"")
 
         assertEquals("news_desk:(\"science\" \"technology\")", viewModel.transformKeywordFilterToQueryReady(arrayListKeywordFilter))
 
