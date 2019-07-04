@@ -15,7 +15,6 @@ class ViewModelFactory private constructor(private val nytUseCase: NytUseCase) :
             modelClass.isAssignableFrom(MostPopularViewModel::class.java) -> MostPopularViewModel(nytUseCase) as T
             modelClass.isAssignableFrom(TopStoriesViewModel::class.java) -> TopStoriesViewModel(nytUseCase) as T
             modelClass.isAssignableFrom(SearchViewModel::class.java) -> SearchViewModel(nytUseCase) as T
-            modelClass.isAssignableFrom(NotificationViewModel::class.java) -> NotificationViewModel() as T
             else -> throw IllegalArgumentException("Wrong UseCase Parameter")
         }
     }

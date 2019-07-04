@@ -1,8 +1,8 @@
 package com.gt.mynews.usecases
 
-import com.gt.mynews.data.NotificationSettingsArticlesSaved
-import com.gt.mynews.data.SharedPreferencesInterface
-import junit.framework.Assert.assertEquals
+import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
+import com.gt.mynews.data.repositories.SharedPreferencesInterface
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -16,7 +16,7 @@ class NotificationUseCaseTest {
 
     @Before
     fun setRepo(){
-        repo = object : SharedPreferencesInterface{
+        repo = object : SharedPreferencesInterface {
             override fun saveString(key: String, stringToSave: String?) {
                 when(key) {
                     NotificationSettingsArticlesSaved.KEY_NEW_ARTICLE -> {
@@ -35,6 +35,7 @@ class NotificationUseCaseTest {
                     NotificationSettingsArticlesSaved.KEY_NEW_ARTICLE -> stringToTestNewArticle
                     NotificationSettingsArticlesSaved.KEY_KEYWORD -> stringToTestKeyword
                     NotificationSettingsArticlesSaved.KEY_KEYWORD_FILTER -> stringToTestKeywordFilter
+                    NotificationSettingsArticlesSaved.KEY_OLD_ARTICLE -> stringToTestOldArticle
                     else -> throw IllegalArgumentException("Wrong key !")
                 }
             }
@@ -50,7 +51,7 @@ class NotificationUseCaseTest {
         val articleTitleToSave = "bonjour"
 
         //when
-        useCase.saveTitleArticle(articleTitleToSave)
+        useCase.saveTitle(articleTitleToSave)
 
         //then
         assertEquals("bonjour", stringToTestNewArticle)
@@ -78,7 +79,7 @@ class NotificationUseCaseTest {
         val keywordFilterToSave = "Ceci est un keywordFilter"
 
         //when
-        useCase.saveKeyword(keywordFilterToSave)
+        useCase.saveKeywordFilter(keywordFilterToSave)
 
         //then
         assertEquals("Ceci est un keywordFilter", stringToTestKeywordFilter)
@@ -153,6 +154,6 @@ class NotificationUseCaseTest {
         stringToTestKeywordFilter = keywordFilterToSave
 
         //then
-        assertEquals("mot-clef ici !", useCase.getKeywordFilter())
+        assertEquals("ahaha, ceci est un keywordFilter", useCase.getKeywordFilter())
     }
 }

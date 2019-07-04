@@ -1,4 +1,4 @@
-package com.gt.mynews.data
+package com.gt.mynews.data.repositories
 
 interface SharedPreferencesInterface {
 

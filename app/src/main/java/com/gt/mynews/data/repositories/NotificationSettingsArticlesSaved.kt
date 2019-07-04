@@ -1,4 +1,4 @@
-package com.gt.mynews.data
+package com.gt.mynews.data.repositories
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
