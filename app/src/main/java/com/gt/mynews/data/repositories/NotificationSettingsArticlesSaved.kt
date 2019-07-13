@@ -10,10 +10,10 @@ class NotificationSettingsArticlesSaved(context: Context): SharedPreferencesInte
 
     companion object{
         private const val KEY_FILE_PREFERENCES = "article.article"
-        const val KEY_NEW_ARTICLE = "KEY_NEW_ARTICLE"
-        const val KEY_OLD_ARTICLE = "KEY_OLD_ARTICLE"
-        const val KEY_KEYWORD = "KEY_KEYWORD"
-        const val KEY_KEYWORD_FILTER = "KEY_KEYWORD_FILTER"
+        private const val KEY_NEW_ARTICLE = "KEY_NEW_ARTICLE"
+        private const val KEY_OLD_ARTICLE = "KEY_OLD_ARTICLE"
+        private const val KEY_KEYWORD = "KEY_KEYWORD"
+        private const val KEY_KEYWORD_FILTER = "KEY_KEYWORD_FILTER"
     }
 
     override fun saveString(key: String, stringToSave: String?) {
@@ -35,7 +35,7 @@ class NotificationSettingsArticlesSaved(context: Context): SharedPreferencesInte
         }
     }
 
-    private fun putTitleNewArticleInSharedPreferences(title: String?){
+    fun putTitleNewArticleInSharedPreferences(title: String?){
 
         //not deleting old "new" article, but transfer it in KEY_OLD_ARTICLE
         val oldArticle = mPreferences.getString(KEY_NEW_ARTICLE, null)
@@ -44,30 +44,30 @@ class NotificationSettingsArticlesSaved(context: Context): SharedPreferencesInte
         mPreferences.edit().putString(KEY_OLD_ARTICLE, oldArticle).apply()
     }
 
-    private fun getNewArticle() : String?{
+    fun getNewArticle() : String?{
         return mPreferences.getString(KEY_NEW_ARTICLE, null)
     }
 
-    private fun getOldArticle() : String?{
+    fun getOldArticle() : String?{
         return mPreferences.getString(KEY_OLD_ARTICLE, null)
     }
 
-    private fun saveApiRequestKeyword(keyword: String?){
+    fun saveApiRequestKeyword(keyword: String?){
 
         mPreferences.edit().putString(KEY_KEYWORD, keyword).apply()
     }
 
-    private fun saveApiRequestKeywordFilter(keywordFilter: String?){
+    fun saveApiRequestKeywordFilter(keywordFilter: String?){
 
         mPreferences.edit().putString(KEY_KEYWORD_FILTER, keywordFilter).apply()
     }
 
-    private fun getKeywordToSearch(): String?{
+    fun getKeywordToSearch(): String?{
 
         return mPreferences.getString(KEY_KEYWORD, null)
     }
 
-    private fun getKeywordFilterToSearch(): String?{
+    fun getKeywordFilterToSearch(): String?{
 
         return mPreferences.getString(KEY_KEYWORD_FILTER, null)
     }
