@@ -2,21 +2,21 @@ package com.gt.mynews.usecases
 
 import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
 
-class ApiSettingsSaveUseCase(private val repo: NotificationSettingsArticlesSaved) {
+class ApiSettingsSaveUseCase(private val repo: NotificationSettingsArticlesSaved): SettingsSaveUseCaseInterface {
 
-    fun saveKeyword(stringToSave: String?){
+    override fun saveKeyword(stringToSave: String?){
         repo.saveApiRequestKeyword(stringToSave)
     }
 
-    fun saveKeywordFilter(stringToSave: String?){
+    override fun saveKeywordFilter(stringToSave: String?){
         repo.saveApiRequestKeywordFilter(stringToSave)
     }
 
-    fun getKeyword(): String?{
+    override fun getKeyword(): String?{
         return repo.getKeywordToSearch()
     }
 
-    fun getKeywordFilter(): String?{
+    override fun getKeywordFilter(): String?{
         return repo.getKeywordFilterToSearch()
     }
 }

@@ -1,64 +1,46 @@
 package com.gt.mynews.usecases
 
-import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
+import androidx.annotation.VisibleForTesting
+import com.gt.mynews.data.repositories.SharedPreferencesInterface
 import com.gt.mynews.viewmodels.models.Article
-import kotlinx.coroutines.*
 
-class ArticlesComparatorUseCase(private val repo: NotificationSettingsArticlesSaved,
+
+class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
                                 private val nytUseCase: NytUseCase,
-                                private val apiSettingsSaveUseCase: ApiSettingsSaveUseCase) {
-
-    var currentJob: Job? = null
+                                private val apiSettingsSaveUseCase: SettingsSaveUseCaseInterface) {
 
     private var articleSearch: Article? = null
 
-    fun launchSearchLastArticlesAndCompareToOldOnes(){
+    fun launchSearchLastArticlesAndCompareToOldOnes():Boolean{
 
-        cancelJobIfActive()
 
         val keyword = apiSettingsSaveUseCase.getKeyword()
         val keywordFilter = apiSettingsSaveUseCase.getKeywordFilter()
 
-        currentJob = CoroutineScope(Dispatchers.IO).launch{
-            fetchArticles(keyword, keywordFilter)
-        }
-    }
-
-    private suspend fun fetchArticles(keyword: String?, keywordFilter: String?){
-
         articleSearch = nytUseCase.getSearch(keyword, keywordFilter, null, null)
                 ?.response
-                ?.docs?.get(1)?.let {
+                ?.docs?.get(0)?.let {
             Article(it.sectionName, null,null,null, null)
         }
-        withContext(Dispatchers.Main){
-            saveTitle((articleSearch?.articleTitle))
-        }
-}
+        saveTitle((articleSearch?.articleTitle))
+        return isSameTitle()
+    }
 
-    fun saveTitle(stringToSave: String?){
+    @VisibleForTesting
+    internal fun saveTitle(stringToSave: String?){
         repo.putTitleNewArticleInSharedPreferences(stringToSave)
     }
 
-    fun getNewArticleTitle(): String?{
+    private fun getNewArticleTitle(): String?{
         return repo.getNewArticle()
     }
 
-    fun getOldArticleTitle(): String?{
+    private fun getOldArticleTitle(): String?{
         return repo.getOldArticle()
     }
 
-    fun isSameTitle():Boolean{
+    private fun isSameTitle():Boolean{
         return getNewArticleTitle() == getOldArticleTitle()
     }
 
-
-    fun cancelJobIfActive(){
-
-        currentJob?.let {
-            if(it.isActive){
-                it.cancel()
-            }
-        }
-    }
 }

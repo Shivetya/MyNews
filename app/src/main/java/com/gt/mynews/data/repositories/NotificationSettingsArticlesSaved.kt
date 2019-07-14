@@ -16,26 +16,8 @@ class NotificationSettingsArticlesSaved(context: Context): SharedPreferencesInte
         private const val KEY_KEYWORD_FILTER = "KEY_KEYWORD_FILTER"
     }
 
-    override fun saveString(key: String, stringToSave: String?) {
-        when(key){
-            KEY_NEW_ARTICLE -> putTitleNewArticleInSharedPreferences(stringToSave)
-            KEY_KEYWORD -> saveApiRequestKeyword(stringToSave)
-            KEY_KEYWORD_FILTER -> saveApiRequestKeywordFilter(stringToSave)
-            else -> throw IllegalArgumentException("Wrong key !")
-        }
-    }
 
-    override fun getString(key: String): String? {
-        return when(key){
-            KEY_NEW_ARTICLE -> getNewArticle()
-            KEY_OLD_ARTICLE -> getOldArticle()
-            KEY_KEYWORD -> getKeywordToSearch()
-            KEY_KEYWORD_FILTER -> getKeywordFilterToSearch()
-            else -> throw IllegalArgumentException("Wrong key !")
-        }
-    }
-
-    fun putTitleNewArticleInSharedPreferences(title: String?){
+    override fun putTitleNewArticleInSharedPreferences(title: String?){
 
         //not deleting old "new" article, but transfer it in KEY_OLD_ARTICLE
         val oldArticle = mPreferences.getString(KEY_NEW_ARTICLE, null)
@@ -44,30 +26,30 @@ class NotificationSettingsArticlesSaved(context: Context): SharedPreferencesInte
         mPreferences.edit().putString(KEY_OLD_ARTICLE, oldArticle).apply()
     }
 
-    fun getNewArticle() : String?{
+    override fun getNewArticle() : String?{
         return mPreferences.getString(KEY_NEW_ARTICLE, null)
     }
 
-    fun getOldArticle() : String?{
+    override fun getOldArticle() : String?{
         return mPreferences.getString(KEY_OLD_ARTICLE, null)
     }
 
-    fun saveApiRequestKeyword(keyword: String?){
+    override fun saveApiRequestKeyword(keyword: String?){
 
         mPreferences.edit().putString(KEY_KEYWORD, keyword).apply()
     }
 
-    fun saveApiRequestKeywordFilter(keywordFilter: String?){
+    override fun saveApiRequestKeywordFilter(keywordFilter: String?){
 
         mPreferences.edit().putString(KEY_KEYWORD_FILTER, keywordFilter).apply()
     }
 
-    fun getKeywordToSearch(): String?{
+    override fun getKeywordToSearch(): String?{
 
         return mPreferences.getString(KEY_KEYWORD, null)
     }
 
-    fun getKeywordFilterToSearch(): String?{
+    override fun getKeywordFilterToSearch(): String?{
 
         return mPreferences.getString(KEY_KEYWORD_FILTER, null)
     }
