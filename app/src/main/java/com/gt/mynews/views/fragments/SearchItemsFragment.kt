@@ -17,6 +17,7 @@ import com.gt.mynews.R
 import com.gt.mynews.viewmodels.GenericViewModel
 import com.gt.mynews.viewmodels.SearchViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
+import kotlinx.android.synthetic.main.checkboxes.*
 import kotlinx.android.synthetic.main.fragment_search_items.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -55,7 +56,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         addListenerToTextInputEditTextKeyword()
         addListenerToTextInputEditTextBeginDate()
         addListenerToTextInputEditTextEndDate()
-        addListenersToCheckBoxes()
+        addListenersToCheckBoxes(view)
 
         view.findViewById<MaterialButton>(R.id.fragment_search_button_search).setOnClickListener {
             launchSearch(mKeyword, mKeywordFilter, mEndDate, mBeginDate)
@@ -105,14 +106,32 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         datePickerDialog.show()
     }
 
-    private fun addListenersToCheckBoxes(){
+    private fun addListenersToCheckBoxes(view: View){
 
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).setOnClickListener(this)
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_business_2).setOnClickListener(this)
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_entrepreneurs_3).setOnClickListener(this)
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_politics_4).setOnClickListener(this)
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_sports_5).setOnClickListener(this)
-        view!!.findViewById<CheckBox>(R.id.fragment_search_checkbox_travel_6).setOnClickListener(this)
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).let {
+            it.setOnClickListener(this)
+            it.tag = "arts"
+        }
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_business_2).let {
+            it.setOnClickListener(this)
+            it.tag = "business"
+        }
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_entrepreneurs_3).let {
+            it.setOnClickListener(this)
+            it.tag = "entrepreneur"
+        }
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_politics_4).let {
+            it.setOnClickListener(this)
+            it.tag = "politics"
+        }
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_sports_5).let {
+            it.setOnClickListener(this)
+            it.tag = "sports"
+        }
+        view.findViewById<CheckBox>(R.id.fragment_search_checkbox_travel_6).let {
+            it.setOnClickListener(this)
+            it.tag = "travel"
+        }
 
     }
 
@@ -120,31 +139,10 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         if(v is CheckBox){
             val checked = v.isChecked
 
-            when (v.id){
-                R.id.fragment_search_checkbox_arts_1 -> {
-                    if(checked) mKeywordFilter.add("\"arts\"")
-                    else mKeywordFilter.remove("\"arts\"")
-                }
-                R.id.fragment_search_checkbox_business_2 ->{
-                    if(checked) mKeywordFilter.add("\"business\"")
-                    else mKeywordFilter.remove("\"business\"")
-                }
-                R.id.fragment_search_checkbox_entrepreneurs_3 ->{
-                    if(checked) mKeywordFilter.add("\"entrepreneurs\"")
-                    else mKeywordFilter.remove("\"entrepreneurs\"")
-                }
-                R.id.fragment_search_checkbox_politics_4 ->{
-                    if(checked) mKeywordFilter.add("\"politics\"")
-                    else mKeywordFilter.remove("\"politics\"")
-                }
-                R.id.fragment_search_checkbox_sports_5 ->{
-                    if(checked) mKeywordFilter.add("\"sports\"")
-                    else mKeywordFilter.remove("\"sports\"")
-                }
-                R.id.fragment_search_checkbox_travel_6 ->{
-                    if(checked) mKeywordFilter.add("\"travel\"")
-                    else mKeywordFilter.remove("\"travel\"")
-                }
+            if(checked){
+                mKeywordFilter.add(v.tag as String)
+            } else {
+                mKeywordFilter.remove(v.tag as String)
             }
         }
     }

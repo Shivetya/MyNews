@@ -2,6 +2,17 @@ package com.gt.mynews.data.repositories
 
 interface SharedPreferencesInterface {
 
-    fun saveString(key: String, stringToSave: String?)
-    fun getString(key: String): String?
+    fun putTitleNewArticleInSharedPreferences(title: String?)
+
+    fun getNewArticle() : String?
+
+    fun getOldArticle() : String?
+
+    fun saveApiRequestKeyword(keyword: String?)
+
+    fun saveApiRequestKeywordFilter(keywordFilter: String?)
+
+    fun getKeywordToSearch(): String?
+
+    fun getKeywordFilterToSearch(): String?
 }

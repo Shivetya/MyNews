@@ -59,10 +59,10 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
             textViewDescription.text = articles[position].articleTitle
             url = articles[position].url!!
 
-            if (articles[position].imageUrl == null || !articles[position].imageUrl!!.contains("http")){
-                glide.load(R.drawable.newyorktime_logo).into(imageViewArticle)
-            } else{
+            if (articles[position].imageUrl?.contains("http") == true){
                 glide.load(articles[position].imageUrl).into(imageViewArticle)
+            } else{
+                glide.load(R.drawable.newyorktime_logo).into(imageViewArticle)
             }
         }
 

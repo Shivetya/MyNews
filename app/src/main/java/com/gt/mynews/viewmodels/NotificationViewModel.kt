@@ -2,9 +2,9 @@ package com.gt.mynews.viewmodels
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
-import com.gt.mynews.usecases.NotificationUseCase
+import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 
-class NotificationViewModel(private val usecase: NotificationUseCase) : ViewModel() {
+class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewModel() {
 
     fun saveKeyword(keyword: String?){
 

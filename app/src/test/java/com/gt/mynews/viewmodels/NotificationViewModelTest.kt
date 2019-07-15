@@ -2,23 +2,20 @@ package com.gt.mynews.viewmodels
 
 import androidx.test.core.app.ApplicationProvider
 import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
-import com.gt.mynews.usecases.NotificationUseCase
+import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
 class NotificationViewModelTest {
 
-    private val useCase: NotificationUseCase = NotificationUseCase(NotificationSettingsArticlesSaved(ApplicationProvider.getApplicationContext()))
+    private val useCase: ApiSettingsSaveUseCase = ApiSettingsSaveUseCase(NotificationSettingsArticlesSaved(ApplicationProvider.getApplicationContext()))
 
     @Test
     fun `should transform keyword and keywordFilter to query ready`(){
         //given
         val viewModel = NotificationViewModel(useCase)
         val keyword = "black cat"
-
+        //sortir la fonction du assert
         //then
         assertEquals("(\"black cat\")", viewModel.transformKeywordQueryReady(keyword))
     }
