@@ -5,7 +5,10 @@ import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
 import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
 class NotificationViewModelTest {
 
     private val useCase: ApiSettingsSaveUseCase = ApiSettingsSaveUseCase(NotificationSettingsArticlesSaved(ApplicationProvider.getApplicationContext()))
