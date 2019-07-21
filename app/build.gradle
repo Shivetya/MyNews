@@ -13,11 +13,14 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildToolsVersion("29.0.0")
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility java_version
+        sourceCompatibility java_version
     }
 
     testOptions{
@@ -81,6 +84,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.0.2"
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation "org.mockito:mockito-core:2.28.2"
+    testImplementation "androidx.work:work-testing:$work_version"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:core:1.2.0'

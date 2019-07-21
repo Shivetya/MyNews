@@ -1,19 +1,18 @@
 package com.gt.mynews.views.activities
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProviders
 import com.gt.mynews.R
-import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
-import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import com.gt.mynews.viewmodels.NotificationViewModel
+import com.gt.mynews.viewmodels.ViewModelFactory
 
 class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val viewModel = NotificationViewModel(ApiSettingsSaveUseCase(NotificationSettingsArticlesSaved(this)))
+    private val viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(NotificationViewModel::class.java)
     private val mKeywordFilter : ArrayList<String> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -19,7 +19,7 @@ class TopStoriesViewModel (private val useCase : NytUseCase) : GenericViewModel(
         cancelJobIfActive()
 
         currentJob = viewModelScope.launch(Dispatchers.IO) {
-            fetchArticles(keyword, null, null, null)
+            fetchArticles(keyword)
         }
     }
 

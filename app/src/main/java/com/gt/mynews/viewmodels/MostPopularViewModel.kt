@@ -18,7 +18,7 @@ class MostPopularViewModel (private val useCase: NytUseCase) : GenericViewModel(
         cancelJobIfActive()
 
         currentJob = viewModelScope.launch(Dispatchers.IO) {
-            fetchArticles(null, null, null, null)
+            fetchArticles()
         }
     }
 

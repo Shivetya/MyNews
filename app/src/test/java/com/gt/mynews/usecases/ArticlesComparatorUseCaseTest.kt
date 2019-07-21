@@ -49,7 +49,7 @@ class ArticlesComparatorUseCaseTest {
         doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertFalse(comparatorUseCase.launchSearchLastArticlesAndCompareToOldOnes())
+        assertFalse(comparatorUseCase.isThereNewArticle())
     }
 
     @Test
@@ -60,7 +60,7 @@ class ArticlesComparatorUseCaseTest {
         doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertTrue(comparatorUseCase.launchSearchLastArticlesAndCompareToOldOnes())
+        assertTrue(comparatorUseCase.isThereNewArticle())
     }
 
     @Test
@@ -69,7 +69,7 @@ class ArticlesComparatorUseCaseTest {
         doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //when
-        comparatorUseCase.launchSearchLastArticlesAndCompareToOldOnes()
+        comparatorUseCase.isThereNewArticle()
 
         //then
         verify(mockNytUseCase).getSearch((eq("keyword")), eq("keywordFilter"), eq(null), eq(null))

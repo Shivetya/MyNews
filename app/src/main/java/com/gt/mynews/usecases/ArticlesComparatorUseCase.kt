@@ -7,11 +7,13 @@ import com.gt.mynews.viewmodels.models.Article
 
 class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
                                 private val nytUseCase: NytUseCase,
-                                private val apiSettingsSaveUseCase: SettingsSaveUseCaseInterface) {
+                                private val apiSettingsSaveUseCase: SettingsSaveUseCaseInterface) : ArticlesComparatorUseCaseInterface {
 
     private var articleSearch: Article? = null
 
-    fun launchSearchLastArticlesAndCompareToOldOnes():Boolean{
+
+    //Launch seaurch for new articles and compare wit old ones to konw if there is nes articles
+    override fun isThereNewArticle():Boolean{
 
 
         val keyword = apiSettingsSaveUseCase.getKeyword()
@@ -23,23 +25,23 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
             Article(it.sectionName, null,null,null, null)
         }
         saveTitle((articleSearch?.articleTitle))
-        return isSameTitle()
+        return !isSameTitle()
     }
 
     @VisibleForTesting
-    internal fun saveTitle(stringToSave: String?){
+    override fun saveTitle(stringToSave: String?){
         repo.putTitleNewArticleInSharedPreferences(stringToSave)
     }
 
-    private fun getNewArticleTitle(): String?{
+    override fun getNewArticleTitle(): String?{
         return repo.getNewArticle()
     }
 
-    private fun getOldArticleTitle(): String?{
+    override fun getOldArticleTitle(): String?{
         return repo.getOldArticle()
     }
 
-    private fun isSameTitle():Boolean{
+    override fun isSameTitle():Boolean{
         return getNewArticleTitle() == getOldArticleTitle()
     }
 
