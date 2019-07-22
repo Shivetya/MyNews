@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         JodaTimeAndroid.init(this)
-        createNotificationChannel()
+        //createNotificationChannel()
 
         setContentView(R.layout.activity_main)
 
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         this.startActivity(intent)
     }
 
-    private fun createNotificationChannel() {
+   /* private fun createNotificationChannel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = CHANNEL_NAME
@@ -88,5 +88,5 @@ class MainActivity : AppCompatActivity() {
                     ContextCompat.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-    }
+    }*/
 }

@@ -25,7 +25,7 @@ class NotificationWorker(context: Context, workParams: WorkerParameters): Worker
         mIsNewArticle = mArticlesComparatorUseCase.isThereNewArticle()
 
         if(mIsNewArticle){
-            val notifBuilder = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
+            //val notifBuilder = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
         }
         else{
             //pas Notif
