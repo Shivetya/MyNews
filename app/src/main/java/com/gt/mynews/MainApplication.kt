@@ -2,13 +2,17 @@ package com.gt.mynews
 
 import android.app.Application
 import android.content.Context
+import com.gt.mynews.notifications.ChannelNotificationManager
 
 class MainApplication : Application(){
+
 
     override fun onCreate() {
         super.onCreate()
 
         setApplication(this)
+
+        ChannelNotificationManager.createNotificationChannel()
     }
 
     companion object{
@@ -21,6 +25,10 @@ class MainApplication : Application(){
         private fun setApplication(mainApplication: MainApplication){
             instanceContext = mainApplication
         }
+
+
     }
+
+
 
 }
