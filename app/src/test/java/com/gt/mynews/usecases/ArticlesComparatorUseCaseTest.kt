@@ -41,7 +41,7 @@ class ArticlesComparatorUseCaseTest {
     }
 
     @Test
-    fun `should return false when differents titles`(){
+    fun `should return true when differents titles`(){
         //given
         doReturn("OldTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
@@ -49,18 +49,18 @@ class ArticlesComparatorUseCaseTest {
         doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertFalse(comparatorUseCase.isThereNewArticle())
+        assertTrue(comparatorUseCase.isThereNewArticle())
     }
 
     @Test
-    fun `should return true when same titles`(){
+    fun `should return false when same titles`(){
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
         doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertTrue(comparatorUseCase.isThereNewArticle())
+        assertFalse(comparatorUseCase.isThereNewArticle())
     }
 
     @Test

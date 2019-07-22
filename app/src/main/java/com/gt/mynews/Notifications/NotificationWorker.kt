@@ -1,9 +1,11 @@
-package com.gt.mynews.utils
+package com.gt.mynews.Notifications
 
 
 import android.content.Context
+import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.gt.mynews.MainApplication
 import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
 import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import com.gt.mynews.usecases.ArticlesComparatorUseCase
@@ -16,14 +18,14 @@ class NotificationWorker(context: Context, workParams: WorkerParameters): Worker
             NytUseCaseImpl(),
             ApiSettingsSaveUseCase(NotificationSettingsArticlesSaved(context)))
 
-    var mNotNewArticle: Boolean = false
+    var mIsNewArticle: Boolean = false
 
     override fun doWork(): Result {
 
-        mNotNewArticle = mArticlesComparatorUseCase.isThereNewArticle()
+        mIsNewArticle = mArticlesComparatorUseCase.isThereNewArticle()
 
-        if(mNotNewArticle){
-            //notif
+        if(mIsNewArticle){
+            val notifBuilder = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
         }
         else{
             //pas Notif

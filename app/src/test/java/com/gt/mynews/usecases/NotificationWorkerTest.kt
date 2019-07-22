@@ -2,7 +2,7 @@ package com.gt.mynews.usecases
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.work.testing.TestListenableWorkerBuilder
-import com.gt.mynews.utils.NotificationWorker
+import com.gt.mynews.Notifications.NotificationWorker
 import com.nhaarman.mockitokotlin2.doReturn
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -30,7 +30,7 @@ class NotificationWorkerTest {
         notificationWorker.doWork()
 
         //then
-        assertTrue( notificationWorker.mNotNewArticle)
+        assertTrue( notificationWorker.mIsNewArticle)
     }
 
     @Test
@@ -45,6 +45,6 @@ class NotificationWorkerTest {
         notificationWorker.doWork()
 
         //then
-        assertFalse( notificationWorker.mNotNewArticle)
+        assertFalse( notificationWorker.mIsNewArticle)
     }
 }
