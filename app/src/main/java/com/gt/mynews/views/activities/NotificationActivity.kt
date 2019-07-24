@@ -9,18 +9,29 @@ import androidx.lifecycle.ViewModelProviders
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.NotificationViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
+import kotlinx.android.synthetic.main.activity_notification.*
 
 class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
-    private val viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(NotificationViewModel::class.java)
+    private lateinit var viewModel: NotificationViewModel
     private val mKeywordFilter : ArrayList<String> = ArrayList()
+    private var mKeyword: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.INSTANCE).get(NotificationViewModel::class.java)
 
         configureToolbar()
         addListenersToCheckBoxes()
+        configureSwitchNotif()
+
+    }
+
+    override fun onDestroy() {
+        viewModel.saveKeyword(mKeyword)
+        viewModel.saveKeywordFilter(mKeywordFilter)
+        super.onDestroy()
     }
 
     private fun configureToolbar(){
@@ -74,5 +85,13 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun configureSwitchNotif(){
+        activity_notifications_switch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.onSwitchTouched(isChecked)
+        }
+
+        activity_notifications_switch.isChecked = viewModel.isSwitchOn()
+
+    }
 
 }

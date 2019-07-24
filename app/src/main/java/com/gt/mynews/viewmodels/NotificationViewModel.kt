@@ -7,11 +7,12 @@ import com.gt.mynews.MainApplication
 import com.gt.mynews.notifications.NotificationWorker
 import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewModel() {
 
     companion object{
-        private const val TAG_NOTIF = "TAG_NOTIF"
+        const val TAG_NOTIF = "TAG_NOTIF"
     }
 
     fun saveKeyword(keyword: String?){
@@ -61,19 +62,31 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
 
         if (notifEnabled){
 
-            val constraintsForNotif = Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-
-            val notifWorkerBuilder = PeriodicWorkRequestBuilder<NotificationWorker>(15, TimeUnit.MINUTES)
-                    .setConstraints(constraintsForNotif)
+            val notifWorkerBuilder = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 24, TimeUnit.HOURS)
+                    .setConstraints(Constraints.NONE)
                     .addTag(TAG_NOTIF)
                     .build()
 
-            WorkManager.getInstance(MainApplication.getContext()).enqueue(notifWorkerBuilder)
+            val workmanager = WorkManager.getInstance(MainApplication.getContext())
+            workmanager.enqueue(notifWorkerBuilder)
         } else {
             WorkManager.getInstance(MainApplication.getContext()).cancelAllWorkByTag(TAG_NOTIF)
         }
     }
 
+    fun isSwitchOn(): Boolean{
+
+        val workInfo = WorkManager.getInstance(MainApplication.getContext())
+                .getWorkInfosByTag(TAG_NOTIF)
+                .get()
+
+        return if (workInfo != null && workInfo.isNotEmpty()){
+
+            workInfo.last().state != WorkInfo.State.CANCELLED
+
+        } else {
+            false
+        }
+
+    }
 }

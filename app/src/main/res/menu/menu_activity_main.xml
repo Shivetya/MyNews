@@ -12,6 +12,18 @@
         android:id="@+id/menu_activity_main_params"
         android:icon="@drawable/ic_more_vert_white_24dp"
         app:showAsAction="ifRoom"
-        android:title="@string/parameters"/>
+        android:title="@string/parameters">
+        <menu>
+            <item
+                android:id="@+id/menu_activity_main_notifications"
+                android:title="@string/notifications"/>
+            <item
+                android:id="@+id/menu_activity_main_help"
+                android:title="@string/help"/>
+            <item
+                android:id="@+id/menu_activity_main_about"
+                android:title="@string/about"/>
 
+        </menu>
+    </item>
 </menu>

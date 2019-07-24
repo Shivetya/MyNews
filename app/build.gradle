@@ -62,7 +62,8 @@ dependencies {
     implementation 'com.android.support:percent:28.0.0'
 
     implementation "com.squareup.retrofit2:retrofit:2.5.0" // Core
-    implementation "com.squareup.okhttp3:logging-interceptor:3.14.1"
+    //noinspection GradleDependency
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.1"
     // Interceptor to log API calls in logcat
     implementation "com.squareup.retrofit2:converter-gson:2.5.0" // Converts JSON to POJO / POKO
 

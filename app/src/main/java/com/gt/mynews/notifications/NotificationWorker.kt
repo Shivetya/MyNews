@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.gt.mynews.MainApplication
+import com.gt.mynews.R
 import com.gt.mynews.data.repositories.NotificationSettingsArticlesSaved
 import com.gt.mynews.notifications.ChannelNotificationManager.Companion.CHANNEL_ID
 import com.gt.mynews.usecases.ApiSettingsSaveUseCase
@@ -30,10 +31,12 @@ class NotificationWorker(private val context: Context, workParams: WorkerParamet
     override fun doWork(): Result {
 
         mIsNewArticle = mArticlesComparatorUseCase.isThereNewArticle()
+
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
         if(mIsNewArticle){
             val notif = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.newyorktime_logo)
                     .setContentTitle("New article to see !")
                     .setContentText("Hi ! There is at least one new article to read ! ;)")
                     .setContentIntent(pendingIntent)

@@ -2,8 +2,8 @@ package com.gt.mynews.notifications
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.os.Build
-import androidx.core.content.ContextCompat
 import com.gt.mynews.MainApplication
 
 class ChannelNotificationManager {
@@ -26,7 +26,7 @@ class ChannelNotificationManager {
                 }
                 // Register the channel with the system
                 val notificationManager: NotificationManager =
-                        ContextCompat.getSystemService(MainApplication.getContext(), NotificationManager::class.java) as NotificationManager
+                        MainApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.createNotificationChannel(channel)
             }
         }
