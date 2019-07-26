@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProviders
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.NotificationViewModel
 import com.gt.mynews.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_notification.*
+import kotlinx.android.synthetic.main.edit_text_search_query.*
 
 class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,13 +27,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
         configureToolbar()
         addListenersToCheckBoxes()
         configureSwitchNotif()
+        configureEditText()
 
-    }
-
-    override fun onDestroy() {
-        viewModel.saveKeyword(mKeyword)
-        viewModel.saveKeywordFilter(mKeywordFilter)
-        super.onDestroy()
     }
 
     private fun configureToolbar(){
@@ -46,29 +43,42 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun addListenersToCheckBoxes(){
 
+        var stringKeywordFilter = viewModel.getKeywordFilterSaved()
+
+        if (stringKeywordFilter == null){
+            stringKeywordFilter = ""
+        }
+
         findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).let {
             it.setOnClickListener(this)
             it.tag = "arts"
+            it.isChecked = stringKeywordFilter.contains("arts")
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_business_2).let {
             it.setOnClickListener(this)
             it.tag = "business"
+            it.isChecked = stringKeywordFilter.contains("business")
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_entrepreneurs_3).let {
             it.setOnClickListener(this)
             it.tag = "entrepreneur"
+            it.isChecked = stringKeywordFilter.contains("entrepreneur")
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_politics_4).let {
             it.setOnClickListener(this)
             it.tag = "politics"
+            it.isChecked = stringKeywordFilter.contains("politics")
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_sports_5).let {
             it.setOnClickListener(this)
             it.tag = "sports"
+            it.isChecked = stringKeywordFilter.contains("sports")
+
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_travel_6).let {
             it.setOnClickListener(this)
             it.tag = "travel"
+            it.isChecked = stringKeywordFilter.contains("travel")
         }
 
     }
@@ -83,6 +93,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
                 mKeywordFilter.remove(v.tag as String)
             }
         }
+        viewModel.saveKeywordFilter(mKeywordFilter)
     }
 
     private fun configureSwitchNotif(){
@@ -92,6 +103,14 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
         activity_notifications_switch.isChecked = viewModel.isSwitchOn()
 
+
     }
 
+    private fun configureEditText(){
+        edittext_keyword.setText(viewModel.getKeywordSaved())
+        edittext_keyword.addTextChangedListener {
+            mKeyword = it.toString()
+            viewModel.saveKeyword(mKeyword)
+        }
+    }
 }

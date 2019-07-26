@@ -23,8 +23,8 @@ android {
         sourceCompatibility java_version
     }
 
-    testOptions{
-        unitTests{
+    testOptions {
+        unitTests {
             includeAndroidResources = true
         }
     }

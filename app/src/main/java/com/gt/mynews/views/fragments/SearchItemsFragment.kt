@@ -109,27 +109,27 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
 
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).let {
             it.setOnClickListener(this)
-            it.tag = "\"arts\""
+            it.tag = "arts"
         }
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_business_2).let {
             it.setOnClickListener(this)
-            it.tag = "\"business\""
+            it.tag = "business"
         }
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_entrepreneurs_3).let {
             it.setOnClickListener(this)
-            it.tag = "\"entrepreneur\""
+            it.tag = "entrepreneur"
         }
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_politics_4).let {
             it.setOnClickListener(this)
-            it.tag = "\"politics\""
+            it.tag = "politics"
         }
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_sports_5).let {
             it.setOnClickListener(this)
-            it.tag = "\"sports\""
+            it.tag = "sports"
         }
         view.findViewById<CheckBox>(R.id.fragment_search_checkbox_travel_6).let {
             it.setOnClickListener(this)
-            it.tag = "\"travel\""
+            it.tag = "travel"
         }
 
     }

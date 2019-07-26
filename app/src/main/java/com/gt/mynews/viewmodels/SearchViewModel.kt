@@ -70,7 +70,7 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
     @VisibleForTesting
     internal fun transformKeywordFilterToQueryReady(keywordFilter: ArrayList<String>?) : String?{
         return if(keywordFilter != null && keywordFilter.isNotEmpty() ){
-            "news_desk:(${keywordFilter.joinToString(" ")})"
+            "news_desk:(\"${keywordFilter.joinToString("\" \"")}\")"
         }
         else {
             null

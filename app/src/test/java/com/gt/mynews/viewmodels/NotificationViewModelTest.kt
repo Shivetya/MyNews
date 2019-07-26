@@ -27,7 +27,7 @@ class NotificationViewModelTest {
     fun `should transform keyword filter to query ready`(){
         //giver
         val viewModel = NotificationViewModel(useCase)
-        val keywordFilter = arrayListOf("\"arts\"", "\"politics\"")
+        val keywordFilter = arrayListOf("arts", "politics")
 
         //then
         assertEquals("news_desk:(\"arts\" \"politics\")",

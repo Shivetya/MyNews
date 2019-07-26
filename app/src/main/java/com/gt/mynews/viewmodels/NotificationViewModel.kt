@@ -30,7 +30,12 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
     }
 
     fun getKeywordSaved(): String?{
-        return usecase.getKeyword()
+        return if (usecase.getKeyword() == null){
+            null
+        } else {
+            usecase.getKeyword()!!.removePrefix("(\"").removeSuffix("\")")
+        }
+
     }
 
     fun getKeywordFilterSaved(): String?{
@@ -51,7 +56,7 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
     internal fun transformKeywordFilterToQueryReady(keywordFilter: ArrayList<String>?) : String?{
 
         return if(keywordFilter != null && keywordFilter.isNotEmpty() ){
-            "news_desk:(${keywordFilter.joinToString(" ")})"
+            "news_desk:(\"${keywordFilter.joinToString("\" \"")}\")"
         }
         else {
             null
@@ -82,7 +87,7 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
 
         return if (workInfo != null && workInfo.isNotEmpty()){
 
-            workInfo.last().state != WorkInfo.State.CANCELLED
+            workInfo.last().state == WorkInfo.State.ENQUEUED || workInfo.last().state == WorkInfo.State.RUNNING
 
         } else {
             false

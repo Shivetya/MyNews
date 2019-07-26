@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         when(item!!.itemId){
             R.id.menu_activity_main_search -> launchSearchActivity()
             R.id.menu_activity_main_notifications -> launchNotificationActivity()
+            R.id.menu_activity_main_help -> launchHelpActivity()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun launchNotificationActivity(){
         val intent = Intent(this, NotificationActivity::class.java)
+        this.startActivity(intent)
+    }
+
+    private fun launchHelpActivity(){
+        val intent = Intent(this, HelpActivity::class.java)
         this.startActivity(intent)
     }
 

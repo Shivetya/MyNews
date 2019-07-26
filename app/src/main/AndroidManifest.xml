@@ -16,6 +16,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".views.activities.HelpActivity"
+            android:parentActivityName=".views.activities.MainActivity"/>
+        <activity
             android:name=".views.activities.NotificationActivity"
             android:parentActivityName=".views.activities.MainActivity" />
         <activity
