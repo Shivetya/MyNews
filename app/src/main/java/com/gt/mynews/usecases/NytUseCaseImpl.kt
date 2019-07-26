@@ -1,11 +1,16 @@
 package com.gt.mynews.usecases
 
 import com.gt.mynews.data.ArticleApiResponse
+import com.gt.mynews.utils.TLSSocketFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.KeyStore
+import java.util.*
+import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 class NytUseCaseImpl : NytUseCase {
 
@@ -21,6 +26,14 @@ class NytUseCaseImpl : NytUseCase {
 
         init {
 
+            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+            trustManagerFactory.init(null as KeyStore?)
+            val trustManagers = trustManagerFactory.trustManagers
+            if (trustManagers.size != 1 || trustManagers[0] !is X509TrustManager) {
+                throw IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers))
+            }
+            val trustManager = trustManagers[0] as X509TrustManager
+
             val apiKeyInterceptor = Interceptor{chain ->
                 var request = chain.request()
                 val url = request.url()
@@ -35,6 +48,7 @@ class NytUseCaseImpl : NytUseCase {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
+                    .sslSocketFactory(TLSSocketFactory(), trustManager)
                     .addInterceptor(apiKeyInterceptor)
                     .addInterceptor(loggingInterceptor)
                     .build()
