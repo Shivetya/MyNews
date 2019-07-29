@@ -1,7 +1,5 @@
 package com.gt.mynews.views.adapters
 
-
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -11,7 +9,6 @@ class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter
 
     private val fragments = listOf(
             TopStoriesFragment.newInstance("home"),
-            MostPopularFragment.newInstance(),
             TopStoriesFragment.newInstance("science"),
             TopStoriesFragment.newInstance("technology")
     )
@@ -23,9 +20,8 @@ class PageAdapter(fragmentManager : FragmentManager) : FragmentStatePagerAdapter
     override fun getPageTitle(position: Int): CharSequence? {
         return when(position){
             0 -> "Top Stories"
-            1 -> "Most Popular"
-            2 -> "Science"
-            3 -> "Technology"
+            1 -> "Science"
+            2 -> "Technology"
             else -> "Mysterious tab"
         }
     }
