@@ -2,6 +2,7 @@ package com.gt.mynews.views.fragments
 
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,15 +31,22 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var viewModel : GenericViewModel
 
-    private var mKeyword : String? = null
-    private var mBeginDate : String? = null
-    private var mEndDate : String? = null
-    private var mKeywordFilter : ArrayList<String> = ArrayList()
+    private var keyword : String? = null
+    private var beginDate : String? = null
+    private var endDate : String? = null
+    private val keywordFilter : ArrayList<String> = ArrayList()
+    private lateinit var listener: ListenerSearch
 
     companion object {
         fun newInstance() : SearchItemsFragment {
             return SearchItemsFragment()
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        listener = activity as ListenerSearch
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +66,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         addListenersToCheckBoxes(view)
 
         view.findViewById<MaterialButton>(R.id.fragment_search_button_search).setOnClickListener {
-            launchSearch(mKeyword, mKeywordFilter, mBeginDate, mEndDate)
+            launchSearch(keyword, keywordFilter, beginDate, endDate)
         }
 
     }
@@ -66,7 +74,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
     private fun addListenerToTextInputEditTextKeyword(){
 
         view!!.findViewById<EditText>(R.id.edittext_keyword).addTextChangedListener{
-            mKeyword = "$it"
+            keyword = "$it"
         }
     }
 
@@ -92,12 +100,12 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         val datePickerDialog = DatePickerDialog(context!!, DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             when (textInputEditText.id){
                 R.id.fragment_search_edittext_begin_date -> {
-                    mBeginDate = "$dayOfMonth-${monthOfYear+1}-$year"
-                    fragment_search_edittext_begin_date.setText(mBeginDate, TextView.BufferType.EDITABLE)
+                    beginDate = "$dayOfMonth-${monthOfYear+1}-$year"
+                    fragment_search_edittext_begin_date.setText(beginDate, TextView.BufferType.EDITABLE)
                 }
                 R.id.fragment_search_edittext_end_date -> {
-                    mEndDate = "$dayOfMonth-${monthOfYear+1}-$year"
-                    fragment_search_edittext_end_date.setText(mEndDate, TextView.BufferType.EDITABLE)
+                    endDate = "$dayOfMonth-${monthOfYear+1}-$year"
+                    fragment_search_edittext_end_date.setText(endDate, TextView.BufferType.EDITABLE)
                 }
             }
         }, actualYear, actualMonth, actualDay)
@@ -139,17 +147,16 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
             val checked = v.isChecked
 
             if(checked){
-                mKeywordFilter.add(v.tag as String)
+                keywordFilter.add(v.tag as String)
             } else {
-                mKeywordFilter.remove(v.tag as String)
+                keywordFilter.remove(v.tag as String)
             }
         }
     }
 
     private fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?){
-        val callback = activity as ListenerSearch
 
-        callback.launchSearch(keyword, keywordFilter, beginDate, endDate)
+        listener.launchSearch(keyword, keywordFilter, beginDate, endDate)
     }
 
 }

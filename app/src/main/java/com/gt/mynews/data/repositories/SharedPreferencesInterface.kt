@@ -10,9 +10,9 @@ interface SharedPreferencesInterface {
 
     fun saveApiRequestKeyword(keyword: String?)
 
-    fun saveApiRequestKeywordFilter(keywordFilter: String?)
+    fun saveApiRequestKeywordFilter(keywordFilters: Collection<String>)
 
     fun getKeywordToSearch(): String?
 
-    fun getKeywordFilterToSearch(): String?
+    fun getKeywordFilterToSearch(): Collection<String>
 }

@@ -14,60 +14,29 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
     companion object{
         const val TAG_NOTIF = "TAG_NOTIF"
     }
+    private val listKeywordFilter: MutableCollection<String> = ArrayList()
 
     fun saveKeyword(keyword: String?){
 
         if (keyword != null){
-            usecase.saveKeyword(transformKeywordQueryReady(keyword))
+            usecase.saveKeyword(keyword)
         }
     }
 
-    fun saveKeywordFilter(listKeywordFilter: ArrayList<String>?){
-
-        if (listKeywordFilter != null && listKeywordFilter.isNotEmpty()){
-            usecase.saveKeywordFilter(transformKeywordFilterToQueryReady(listKeywordFilter))
-        }
-    }
-
-    fun getKeywordSaved(): String?{
-        return if (usecase.getKeyword() == null){
-            null
-        } else {
-            usecase.getKeyword()!!.removePrefix("(\"").removeSuffix("\")")
-        }
+    fun getKeywordSaved(): String{
+        return usecase.getKeyword()
 
     }
 
-    fun getKeywordFilterSaved(): String?{
+    fun getKeywordFilterSaved(): Collection<String>{
         return usecase.getKeywordFilter()
     }
 
-    @VisibleForTesting
-    internal fun transformKeywordQueryReady(keyword: String?): String?{
-
-        return if(keyword != null){
-            "(\"$keyword\")"
-        } else {
-            null
-        }
-    }
-
-    @VisibleForTesting
-    internal fun transformKeywordFilterToQueryReady(keywordFilter: ArrayList<String>?) : String?{
-
-        return if(keywordFilter != null && keywordFilter.isNotEmpty() ){
-            "news_desk:(\"${keywordFilter.joinToString("\" \"")}\")"
-        }
-        else {
-            null
-        }
-    }
-
-    fun onSwitchTouched(notifEnabled: Boolean){
+    fun onNotificationEnabled(notifEnabled: Boolean){
 
         if (notifEnabled){
 
-            val notifWorkerBuilder = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 24, TimeUnit.HOURS)
+            val notifWorkerBuilder = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 24, TimeUnit.HOURS, 2, TimeUnit.HOURS)
                     .setConstraints(Constraints.NONE)
                     .addTag(TAG_NOTIF)
                     .build()
@@ -93,5 +62,17 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
             false
         }
 
+    }
+
+    fun addKeywordFilter(keywordFilter: String){
+
+        listKeywordFilter.add(keywordFilter)
+        usecase.saveKeywordFilter(listKeywordFilter)
+    }
+
+    fun removeKeywordFilter(keywordFilter: String){
+
+        listKeywordFilter.remove(keywordFilter)
+        usecase.saveKeywordFilter(listKeywordFilter)
     }
 }

@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(activity_toolbar)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item!!.itemId){
+        when(item.itemId){
             R.id.menu_activity_main_search -> launchSearchActivity()
             R.id.menu_activity_main_notifications -> launchNotificationActivity()
             R.id.menu_activity_main_help -> launchHelpActivity()

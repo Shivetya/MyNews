@@ -4,7 +4,9 @@ import com.gt.mynews.data.ArticleApiResponse
 import com.gt.mynews.data.Doc
 import com.gt.mynews.data.Response
 import com.gt.mynews.data.repositories.SharedPreferencesInterface
+import com.gt.mynews.viewmodels.NotificationViewModel
 import com.nhaarman.mockitokotlin2.*
+import org.junit.Assert
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -86,5 +88,28 @@ class ArticlesComparatorUseCaseTest {
 
         //then
         verify(mockSharedPreferencesInterface).putTitleNewArticleInSharedPreferences(eq(newTitle))
+    }
+
+    @Test
+    fun `should transform keyword and keywordFilter to query ready`(){
+        //given
+        val keyword = "black cat"
+
+        //when
+        val keywordTransformed = comparatorUseCase.transformKeywordQueryReady(keyword)
+
+        //then
+        Assert.assertEquals("(\"black cat\")", keywordTransformed)
+    }
+
+    @Test
+    fun `should transform keyword filter to query ready`(){
+        //giver
+        val keywordFilter = arrayListOf("arts", "politics")
+
+        //when
+        val keywordFilterTransformed = comparatorUseCase.transformKeywordFilterToQueryReady(keywordFilter)
+        //then
+        Assert.assertEquals("news_desk:(\"arts\" \"politics\")", keywordFilterTransformed)
     }
 }

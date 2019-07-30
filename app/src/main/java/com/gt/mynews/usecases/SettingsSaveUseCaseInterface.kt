@@ -4,9 +4,9 @@ interface SettingsSaveUseCaseInterface {
 
     fun saveKeyword(stringToSave: String?)
 
-    fun saveKeywordFilter(stringToSave: String?)
+    fun saveKeywordFilter(keywordFiltersToSave: Collection<String>)
 
     fun getKeyword(): String?
 
-    fun getKeywordFilter(): String?
+    fun getKeywordFilter(): Collection<String>
 }

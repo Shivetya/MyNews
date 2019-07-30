@@ -16,8 +16,6 @@ import kotlinx.android.synthetic.main.edit_text_search_query.*
 class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var viewModel: NotificationViewModel
-    private val mKeywordFilter : ArrayList<String> = ArrayList()
-    private var mKeyword: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +41,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun addListenersToCheckBoxes(){
 
-        var stringKeywordFilter = viewModel.getKeywordFilterSaved()
-
-        if (stringKeywordFilter == null){
-            stringKeywordFilter = ""
-        }
+        val stringKeywordFilter = viewModel.getKeywordFilterSaved()
 
         findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).let {
             it.setOnClickListener(this)
@@ -88,17 +82,16 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
             val checked = v.isChecked
 
             if(checked){
-                mKeywordFilter.add(v.tag as String)
+                viewModel.addKeywordFilter(v.tag as String)
             } else {
-                mKeywordFilter.remove(v.tag as String)
+                viewModel.removeKeywordFilter(v.tag as String)
             }
         }
-        viewModel.saveKeywordFilter(mKeywordFilter)
     }
 
     private fun configureSwitchNotif(){
         activity_notifications_switch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onSwitchTouched(isChecked)
+            viewModel.onNotificationEnabled(isChecked)
         }
 
         activity_notifications_switch.isChecked = viewModel.isSwitchOn()
@@ -109,8 +102,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener {
     private fun configureEditText(){
         edittext_keyword.setText(viewModel.getKeywordSaved())
         edittext_keyword.addTextChangedListener {
-            mKeyword = it.toString()
-            viewModel.saveKeyword(mKeyword)
+            val keyword = it.toString()
+            viewModel.saveKeyword(keyword)
         }
     }
 }

@@ -22,19 +22,17 @@ import com.gt.mynews.views.activities.MainActivity
 
 class NotificationWorker(private val context: Context, workParams: WorkerParameters): Worker(context, workParams) {
 
-    private var mArticlesComparatorUseCase : ArticlesComparatorUseCaseInterface = ArticlesComparatorUseCase(NotificationSettingsArticlesSaved(context),
+    private var articlesComparatorUseCase : ArticlesComparatorUseCaseInterface = ArticlesComparatorUseCase(NotificationSettingsArticlesSaved(context),
             NytUseCaseImpl(),
             ApiSettingsSaveUseCase(NotificationSettingsArticlesSaved(context)))
 
-    var mIsNewArticle: Boolean = false
-
     override fun doWork(): Result {
 
-        mIsNewArticle = mArticlesComparatorUseCase.isThereNewArticle()
+        val isNewArticle = articlesComparatorUseCase.isThereNewArticle()
 
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if(mIsNewArticle){
+        if(isNewArticle){
             val notif = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
                     .setSmallIcon(R.drawable.newyorktime_logo)
                     .setContentTitle("New article to see !")

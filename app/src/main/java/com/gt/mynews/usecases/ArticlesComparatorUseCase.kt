@@ -16,12 +16,12 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
     override fun isThereNewArticle():Boolean{
 
 
-        val keyword = apiSettingsSaveUseCase.getKeyword()
-        val keywordFilter = apiSettingsSaveUseCase.getKeywordFilter()
+        val keyword = transformKeywordQueryReady(apiSettingsSaveUseCase.getKeyword())
+        val keywordFilter = transformKeywordFilterToQueryReady(apiSettingsSaveUseCase.getKeywordFilter())
 
-        articleSearch = nytUseCase.getSearch(keyword, keywordFilter, null, null)
+        articleSearch = nytUseCase.getSearch(keyword,keywordFilter, null, null)
                 ?.response
-                ?.docs?.get(0)?.let {
+                ?.docs?.firstOrNull()?.let {
             Article(it.sectionName, null,null,null, null)
         }
         saveTitle((articleSearch?.articleTitle))
@@ -43,6 +43,27 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
 
     override fun isSameTitle():Boolean{
         return getNewArticleTitle() == getOldArticleTitle()
+    }
+
+    @VisibleForTesting
+    internal fun transformKeywordFilterToQueryReady(keywordFilter: Collection<String>) : String?{
+
+        return if(keywordFilter.isNotEmpty() ){
+            "news_desk:(\"${keywordFilter.joinToString("\" \"")}\")"
+        }
+        else {
+            null
+        }
+    }
+
+    @VisibleForTesting
+    internal fun transformKeywordQueryReady(keyword: String?): String?{
+
+        return if(keyword != null){
+            "(\"$keyword\")"
+        } else {
+            null
+        }
     }
 
 }
