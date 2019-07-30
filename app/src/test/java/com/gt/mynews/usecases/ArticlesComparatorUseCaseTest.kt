@@ -4,7 +4,6 @@ import com.gt.mynews.data.ArticleApiResponse
 import com.gt.mynews.data.Doc
 import com.gt.mynews.data.Response
 import com.gt.mynews.data.repositories.SharedPreferencesInterface
-import com.gt.mynews.viewmodels.NotificationViewModel
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert
 import org.junit.Assert.assertFalse
@@ -38,7 +37,7 @@ class ArticlesComparatorUseCaseTest {
                 })
             }
         })
-                .`when`(mockNytUseCase).getSearch("keyword", "keywordFilter", null,null)
+                .`when`(mockNytUseCase).getSearch("(\"keyword\")", "news_desk:(\"keywordFilter\")", null,null)
 
     }
 
@@ -48,7 +47,7 @@ class ArticlesComparatorUseCaseTest {
         doReturn("OldTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
-        doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
+        doReturn(listOf("keywordFilter")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
         assertTrue(comparatorUseCase.isThereNewArticle())
@@ -59,7 +58,7 @@ class ArticlesComparatorUseCaseTest {
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
-        doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
+        doReturn(listOf("keywordFilter")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
         assertFalse(comparatorUseCase.isThereNewArticle())
@@ -68,13 +67,16 @@ class ArticlesComparatorUseCaseTest {
     @Test
     fun `should launch the search with the good keyword from repo`(){
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
-        doReturn("keywordFilter").`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
+        doReturn(listOf("keywordFilter_1", "keywordFilter_2")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //when
         comparatorUseCase.isThereNewArticle()
 
         //then
-        verify(mockNytUseCase).getSearch((eq("keyword")), eq("keywordFilter"), eq(null), eq(null))
+        verify(mockNytUseCase).getSearch((eq("(\"keyword\")"))
+                ,eq("news_desk:(\"keywordFilter_1\" \"keywordFilter_2\")")
+                ,eq(null)
+                ,eq(null))
 
     }
 
