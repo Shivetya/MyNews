@@ -1,6 +1,5 @@
 package com.gt.mynews.views.adapters
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.bumptech.glide.RequestManager
 import com.gt.mynews.R
 import com.gt.mynews.viewmodels.models.Article
 import kotlinx.android.synthetic.main.recycler_views_item.view.*
-import java.lang.ref.WeakReference
 
 class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
                                 private val glide : RequestManager,
@@ -60,7 +58,7 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
             url = articles[position].url!!
 
             if (articles[position].imageUrl?.contains("http") == true){
-                glide.load(articles[position].imageUrl).into(imageViewArticle)
+                glide.load(articles[position].imageUrl?.replace("https", "http")).into(imageViewArticle)
             } else{
                 glide.load(R.drawable.newyorktime_logo).into(imageViewArticle)
             }

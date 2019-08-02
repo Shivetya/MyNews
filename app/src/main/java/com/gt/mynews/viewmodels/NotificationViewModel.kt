@@ -1,5 +1,6 @@
 package com.gt.mynews.viewmodels
 
+import android.widget.CheckBox
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.work.*
@@ -64,15 +65,7 @@ class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewM
 
     }
 
-    fun addKeywordFilter(keywordFilter: String){
-
-        listKeywordFilter.add(keywordFilter)
-        usecase.saveKeywordFilter(listKeywordFilter)
-    }
-
-    fun removeKeywordFilter(keywordFilter: String){
-
-        listKeywordFilter.remove(keywordFilter)
-        usecase.saveKeywordFilter(listKeywordFilter)
+    fun saveKeywordFilters(keywordFilters: Collection<String>){
+        usecase.saveKeywordFilter(keywordFilters)
     }
 }

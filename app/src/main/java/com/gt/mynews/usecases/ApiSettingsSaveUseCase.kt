@@ -9,11 +9,7 @@ class ApiSettingsSaveUseCase(private val repo: SharedPreferencesInterface): Sett
     }
 
     override fun saveKeywordFilter(keywordFiltersToSave: Collection<String>){
-        val oldKeywordFilter = repo.getKeywordFilterToSearch()
-
-        val totalKeywordFilters: Collection<String> = keywordFiltersToSave.plus(oldKeywordFilter).distinct()
-
-        repo.saveApiRequestKeywordFilter(totalKeywordFilters)
+        repo.saveApiRequestKeywordFilter(keywordFiltersToSave)
     }
 
     override fun getKeyword(): String{
