@@ -58,7 +58,13 @@ class ArticleApiResponseAdapter(private val articlesResponse : List<Article>,
             url = articles[position].url!!
 
             if (articles[position].imageUrl?.contains("http") == true){
-                glide.load(articles[position].imageUrl?.replace("https", "http")).into(imageViewArticle)
+
+                if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.KITKAT) {
+                    glide.load(articles[position].imageUrl?.replace("https", "http")).into(imageViewArticle)
+                } else{
+                    glide.load(articles[position].imageUrl).into(imageViewArticle)
+                }
+
             } else{
                 glide.load(R.drawable.newyorktime_logo).into(imageViewArticle)
             }

@@ -59,7 +59,7 @@ class SearchViewModel(private val useCase : NytUseCase) : GenericViewModel() {
 
     @VisibleForTesting
     internal fun transformKeywordToQueryReady(keyword: String?) : String?{
-        return if (keyword != null){
+        return if (keyword != null || keyword != ""){
             "(\"$keyword\")"
         }
         else {

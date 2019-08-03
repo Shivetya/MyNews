@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .replace(R.id.activity_main_framelayout, MostPopularFragment.newInstance())
                 .commit()
 
-        activity_main_navigation_view.menu.getItem(1).isChecked = true
+        activity_main_navigation_view.setCheckedItem(R.id.activity_main_drawer_most_popular)
 
         activity_main_tabs.removeAllTabs()
         activity_main_tabs.addTab(activity_main_tabs.newTab().setText(R.string.most_popular))
