@@ -9,23 +9,33 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
                                 private val nytUseCase: NytUseCase,
                                 private val apiSettingsSaveUseCase: SettingsSaveUseCaseInterface) : ArticlesComparatorUseCaseInterface {
 
-    private var articleSearch: Article? = null
-
-
     //Launch seaurch for new articles and compare wit old ones to konw if there is nes articles
-    override fun isThereNewArticle():Boolean{
-
+    override fun howManyNewArticles():Int{
 
         val keyword = transformKeywordQueryReady(apiSettingsSaveUseCase.getKeyword())
         val keywordFilter = transformKeywordFilterToQueryReady(apiSettingsSaveUseCase.getKeywordFilter())
 
-        articleSearch = nytUseCase.getSearch(keyword,keywordFilter, null, null)
+        val articleSearch = nytUseCase.getSearch(keyword,keywordFilter, null, null)
                 ?.response
-                ?.docs?.firstOrNull()?.let {
+                ?.docs?.map {
             Article(it.sectionName, null,null,null, null)
         }
-        saveTitle((articleSearch?.articleTitle))
-        return !isSameTitle()
+        saveTitle((articleSearch?.firstOrNull()?.articleTitle))
+
+        var counterNewArticles = 0
+
+        if (articleSearch != null && articleSearch.isNotEmpty()) {
+
+            for (article in articleSearch){
+
+                if (article.categoryArticle.equals(getOldArticleTitle())){
+                    break
+                } else {
+                    counterNewArticles++
+                }
+            }
+        }
+        return counterNewArticles
     }
 
     @VisibleForTesting

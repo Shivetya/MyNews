@@ -28,15 +28,15 @@ class NotificationWorker(private val context: Context, workParams: WorkerParamet
 
     override fun doWork(): Result {
 
-        val isNewArticle = articlesComparatorUseCase.isThereNewArticle()
+        val isNewArticle = articlesComparatorUseCase.howManyNewArticles()
 
         val pendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
 
-        if(isNewArticle){
+        if(isNewArticle > 0){
             val notif = NotificationCompat.Builder(MainApplication.getContext(), CHANNEL_ID)
                     .setSmallIcon(R.drawable.newyorktime_logo)
                     .setContentTitle("New article to see !")
-                    .setContentText("Hi ! There is at least one new article to read ! ;)")
+                    .setContentText("Hi ! you have $isNewArticle new article(s) to read ! ;)")
                     .setContentIntent(pendingIntent)
                     .build()
 

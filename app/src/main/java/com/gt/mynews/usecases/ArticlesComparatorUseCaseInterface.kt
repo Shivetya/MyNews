@@ -3,7 +3,7 @@ package com.gt.mynews.usecases
 
 interface ArticlesComparatorUseCaseInterface {
 
-    fun isThereNewArticle():Boolean
+    fun howManyNewArticles():Int
 
     fun saveTitle(stringToSave: String?)
 

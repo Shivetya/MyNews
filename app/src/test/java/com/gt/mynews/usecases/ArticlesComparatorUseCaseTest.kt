@@ -5,9 +5,7 @@ import com.gt.mynews.data.Doc
 import com.gt.mynews.data.Response
 import com.gt.mynews.data.repositories.SharedPreferencesInterface
 import com.nhaarman.mockitokotlin2.*
-import org.junit.Assert
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,6 +32,10 @@ class ArticlesComparatorUseCaseTest {
             response = Response().apply {
                 docs = listOf(Doc().apply {
                     sectionName = "NewTitle"
+                }, Doc().apply {
+                    sectionName = "Older Title"
+                }, Doc().apply {
+                    sectionName = "Very old Title"
                 })
             }
         })
@@ -42,26 +44,24 @@ class ArticlesComparatorUseCaseTest {
     }
 
     @Test
-    fun `should return true when differents titles`(){
+    fun `should return 2 when 2 new titles`(){
         //given
-        doReturn("OldTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
-        doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
+        doReturn("Very old Title").`when`(mockSharedPreferencesInterface).getOldArticle()
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
         doReturn(listOf("keywordFilter")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertTrue(comparatorUseCase.isThereNewArticle())
+        assertEquals(2, comparatorUseCase.howManyNewArticles())
     }
 
     @Test
-    fun `should return false when same titles`(){
+    fun `should return 0 when no new article`(){
         doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getOldArticle()
-        doReturn("NewTitle").`when`(mockSharedPreferencesInterface).getNewArticle()
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
         doReturn(listOf("keywordFilter")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
         //then
-        assertFalse(comparatorUseCase.isThereNewArticle())
+        assertEquals(0, comparatorUseCase.howManyNewArticles())
     }
 
     @Test
@@ -69,8 +69,21 @@ class ArticlesComparatorUseCaseTest {
         doReturn("keyword").`when`(mockApiSettingsSaveUseCase).getKeyword()
         doReturn(listOf("keywordFilter_1", "keywordFilter_2")).`when`(mockApiSettingsSaveUseCase).getKeywordFilter()
 
+        doReturn(ArticleApiResponse().apply{
+            response = Response().apply {
+                docs = listOf(Doc().apply {
+                    sectionName = "NewTitle"
+                }, Doc().apply {
+                    sectionName = "Older Title"
+                }, Doc().apply {
+                    sectionName = "Very old Title"
+                })
+            }
+        })
+                .`when`(mockNytUseCase).getSearch("(\"keyword\")", "news_desk:(\"keywordFilter_1\" \"keywordFilter_2\")", null,null)
+
         //when
-        comparatorUseCase.isThereNewArticle()
+        comparatorUseCase.howManyNewArticles()
 
         //then
         verify(mockNytUseCase).getSearch((eq("(\"keyword\")"))
@@ -101,7 +114,7 @@ class ArticlesComparatorUseCaseTest {
         val keywordTransformed = comparatorUseCase.transformKeywordQueryReady(keyword)
 
         //then
-        Assert.assertEquals("(\"black cat\")", keywordTransformed)
+        assertEquals("(\"black cat\")", keywordTransformed)
     }
 
     @Test
@@ -112,6 +125,6 @@ class ArticlesComparatorUseCaseTest {
         //when
         val keywordFilterTransformed = comparatorUseCase.transformKeywordFilterToQueryReady(keywordFilter)
         //then
-        Assert.assertEquals("news_desk:(\"arts\" \"politics\")", keywordFilterTransformed)
+        assertEquals("news_desk:(\"arts\" \"politics\")", keywordFilterTransformed)
     }
 }
