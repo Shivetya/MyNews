@@ -94,12 +94,12 @@ class SearchActivityTest {
         datePicker.check(matches(isDisplayed()))
 
         val materialButton = onView(
-                allOf(withId(android.R.id.button2), withText(R.string.cancel),
+                allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(`is`("android.widget.ScrollView")),
                                         0),
-                                2)))
+                                3)))
         materialButton.perform(scrollTo(), click())
 
         val appCompatEditText4 = onView(
@@ -124,12 +124,12 @@ class SearchActivityTest {
         datePicker2.check(matches(isDisplayed()))
 
         val materialButton2 = onView(
-                allOf(withId(android.R.id.button2), withText(R.string.cancel),
+                allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(`is`("android.widget.ScrollView")),
                                         0),
-                                2)))
+                                3)))
         materialButton2.perform(scrollTo(), click())
 
         val materialButton3 = onView(
