@@ -94,7 +94,7 @@ class SearchActivityTest {
         datePicker.check(matches(isDisplayed()))
 
         val materialButton = onView(
-                allOf(withId(android.R.id.button2), withText("Annuler"),
+                allOf(withId(android.R.id.button2), withText(R.string.cancel),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(`is`("android.widget.ScrollView")),
@@ -124,7 +124,7 @@ class SearchActivityTest {
         datePicker2.check(matches(isDisplayed()))
 
         val materialButton2 = onView(
-                allOf(withId(android.R.id.button2), withText("Annuler"),
+                allOf(withId(android.R.id.button2), withText(R.string.cancel),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(`is`("android.widget.ScrollView")),

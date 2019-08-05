@@ -52,7 +52,7 @@ class ToolbarTest {
         frameLayout.check(matches(isDisplayed()))
 
         val appCompatImageButton = onView(
-                allOf(withContentDescription("Revenir en haut de la page"),
+                allOf(withContentDescription(R.string.toolbar_back_button),
                         childAtPosition(
                                 allOf(withId(R.id.activity_toolbar),
                                         childAtPosition(
@@ -93,7 +93,7 @@ class ToolbarTest {
         switch_.check(matches(isDisplayed()))
 
         val appCompatImageButton2 = onView(
-                allOf(withContentDescription("Revenir en haut de la page"),
+                allOf(withContentDescription(R.string.toolbar_back_button),
                         childAtPosition(
                                 allOf(withId(R.id.activity_toolbar),
                                         childAtPosition(

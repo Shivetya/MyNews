@@ -40,12 +40,13 @@
 
     <TextView
         android:id="@+id/fragment_items_text_description"
-        android:layout_width="295dp"
-        android:layout_height="71dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:maxLines="2"
         android:padding="4dp"
         android:textColor="#66000000"
         android:textSize="20sp"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/fragment_items_image_view"
         app:layout_constraintLeft_toRightOf="@id/fragment_items_image_view"
         app:layout_constraintRight_toRightOf="parent"

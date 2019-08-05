@@ -112,7 +112,7 @@ class NotificationActivityTest {
         appCompatEditText2.perform(pressImeActionButton())
 
         val appCompatImageButton2 = onView(
-                allOf(withContentDescription("Revenir en haut de la page"),
+                allOf(withContentDescription(R.string.toolbar_back_button),
                         childAtPosition(
                                 allOf(withId(R.id.activity_toolbar),
                                         childAtPosition(
