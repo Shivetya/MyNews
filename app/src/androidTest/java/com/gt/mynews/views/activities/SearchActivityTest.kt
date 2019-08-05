@@ -3,6 +3,7 @@ package com.gt.mynews.views.activities
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -93,14 +94,7 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker.check(matches(isDisplayed()))
 
-        val materialButton = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(`is`("android.widget.ScrollView")),
-                                        0),
-                                3)))
-        materialButton.perform(scrollTo(), click())
+        Espresso.pressBack()
 
         val appCompatEditText4 = onView(
                 allOf(withId(R.id.fragment_search_edittext_end_date),
@@ -123,14 +117,7 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker2.check(matches(isDisplayed()))
 
-        val materialButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(`is`("android.widget.ScrollView")),
-                                        0),
-                                3)))
-        materialButton2.perform(scrollTo(), click())
+        Espresso.pressBack()
 
         val materialButton3 = onView(
                 allOf(withId(R.id.fragment_search_button_search), withText("SEARCH"),

@@ -31,11 +31,11 @@ class ArticlesComparatorUseCaseTest {
         doReturn(ArticleApiResponse().apply{
             response = Response().apply {
                 docs = listOf(Doc().apply {
-                    sectionName = "NewTitle"
+                    snippet = "NewTitle"
                 }, Doc().apply {
-                    sectionName = "Older Title"
+                    snippet = "Older Title"
                 }, Doc().apply {
-                    sectionName = "Very old Title"
+                    snippet = "Very old Title"
                 })
             }
         })
@@ -72,11 +72,11 @@ class ArticlesComparatorUseCaseTest {
         doReturn(ArticleApiResponse().apply{
             response = Response().apply {
                 docs = listOf(Doc().apply {
-                    sectionName = "NewTitle"
+                    snippet = "NewTitle"
                 }, Doc().apply {
-                    sectionName = "Older Title"
+                    snippet = "Older Title"
                 }, Doc().apply {
-                    sectionName = "Very old Title"
+                    snippet = "Very old Title"
                 })
             }
         })

@@ -18,7 +18,7 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
         val articleSearch = nytUseCase.getSearch(keyword,keywordFilter, null, null)
                 ?.response
                 ?.docs?.map {
-            Article(it.sectionName, null,null,null, null)
+            Article(null, null,it.snippet,null, null)
         }
         saveTitle((articleSearch?.firstOrNull()?.articleTitle))
 
@@ -28,7 +28,7 @@ class ArticlesComparatorUseCase(private val repo: SharedPreferencesInterface,
 
             for (article in articleSearch){
 
-                if (article.categoryArticle.equals(getOldArticleTitle())){
+                if (article.articleTitle.equals(getOldArticleTitle())){
                     break
                 } else {
                     counterNewArticles++
