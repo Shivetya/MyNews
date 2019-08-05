@@ -41,7 +41,7 @@
     <TextView
         android:id="@+id/fragment_items_text_description"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:maxLines="2"
         android:padding="4dp"
         android:textColor="#66000000"

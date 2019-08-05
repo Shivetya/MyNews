@@ -124,7 +124,7 @@ class ToolbarTest {
         materialTextView2.perform(click())
 
         val textView = onView(
-                allOf(withId(R.id.activity_help_textview), withText(" Welcome in MyNews App ! \n \n How to use this app ? \n Once the app launched, you can see the lasts articles from New York Times in category Top Stories.\n You can navigate in the four tabs, which are Top Stories, Most Popular, Science ans Technology.\n \n The search icon leads you to the search page : you can write a keyword you want to search. Moreover, you can specify one or multiple filter to your search, and a range of date. One the search launched, articles from New York Times that match with your criterions will appear. \n Caution : if nothing appear, there is no article that match, try to expand your search. The option icon can lead you to the notification page : here you can, as the search page, specify criterions to be notified once per day if new articles match. Thanks for your download ! ;) "),
+                allOf(withId(R.id.activity_help_textview), withText(R.string.textHelp),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
