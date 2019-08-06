@@ -4,6 +4,8 @@ package com.gt.mynews.views.activities
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -28,6 +30,21 @@ class SearchActivityTest {
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+
+    private val newClick = object : ViewAction {
+
+        override fun  getConstraints(): Matcher<View> {
+            return isEnabled()
+        }
+
+        override fun getDescription(): String {
+            return "click plus button"
+        }
+
+        override fun perform(uiController: UiController, view: View ) {
+            view.performClick()
+        }
+    }
 
     @Test
     fun searchActivityTest() {
@@ -114,9 +131,6 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker2.check(matches(isDisplayed())).perform(pressBack())
 
-        closeSoftKeyboard()
-        Thread.sleep(2000)
-
         val materialButton3 = onView(
                 allOf(withId(R.id.fragment_search_button_search),
                         childAtPosition(
@@ -125,7 +139,7 @@ class SearchActivityTest {
                                         0),
                                 3),
                         isDisplayed()))
-        materialButton3.perform(click())
+        materialButton3.perform(newClick)
 
         val frameLayout = onView(
                 allOf(withId(R.id.activity_search_framelayout),
