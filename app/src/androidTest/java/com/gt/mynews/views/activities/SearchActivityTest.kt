@@ -114,6 +114,8 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker2.check(matches(isDisplayed())).perform(pressBack())
 
+        Thread.sleep(2000)
+
         val materialButton3 = onView(
                 allOf(withId(R.id.fragment_search_button_search), withText("SEARCH"),
                         childAtPosition(

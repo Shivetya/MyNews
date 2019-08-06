@@ -97,18 +97,6 @@ class NotificationActivity : AppCompatActivity() {
 
     }
 
-    /*override fun onClick(v: View?) {
-        if(v is CheckBox){
-            val checked = v.isChecked
-
-            if(checked){
-                viewModel.addKeywordFilter(v.tag as String)
-            } else {
-                viewModel.removeKeywordFilter(v.tag as String)
-            }
-        }
-    }*/
-
     private fun configureSwitchNotif(){
         activity_notifications_switch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onNotificationEnabled(isChecked)
