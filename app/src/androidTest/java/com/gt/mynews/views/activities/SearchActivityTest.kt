@@ -93,9 +93,6 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker.check(matches(isDisplayed())).perform(pressBack())
 
-        closeSoftKeyboard()
-        Thread.sleep(2000)
-
         val appCompatEditText4 = onView(
                 allOf(withId(R.id.fragment_search_edittext_end_date),
                         childAtPosition(
@@ -117,11 +114,8 @@ class SearchActivityTest {
                         isDisplayed()))
         datePicker2.check(matches(isDisplayed())).perform(pressBack())
 
-        closeSoftKeyboard()
-        Thread.sleep(2000)
-
         val materialButton3 = onView(
-                allOf(withId(R.id.fragment_search_button_search), withText("SEARCH"),
+                allOf(withId(R.id.fragment_search_button_search),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.activity_search_framelayout),
