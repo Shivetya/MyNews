@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.button.MaterialButton
@@ -66,7 +67,13 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         addListenersToCheckBoxes(view)
 
         view.findViewById<MaterialButton>(R.id.fragment_search_button_search).setOnClickListener {
-            launchSearch(keyword, keywordFilter, beginDate, endDate)
+            if (keyword != null && keywordFilter.isNotEmpty()){
+                launchSearch(keyword, keywordFilter, beginDate, endDate)
+            } else {
+                Toast.makeText(context,
+                        getString(R.string.error_keyword_checkboxes),
+                        Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -154,7 +161,7 @@ class SearchItemsFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>?, beginDate: String?, endDate: String?){
+    private fun launchSearch(keyword: String?, keywordFilter: ArrayList<String>, beginDate: String?, endDate: String?){
 
         listener.launchSearch(keyword, keywordFilter, beginDate, endDate)
     }

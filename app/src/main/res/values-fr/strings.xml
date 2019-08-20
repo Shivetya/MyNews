@@ -30,5 +30,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="cancel">Annuler</string>
+    <string name="error_keyword_checkboxes">You must enter a keyword and check at least one category !</string>
 
 </resources>

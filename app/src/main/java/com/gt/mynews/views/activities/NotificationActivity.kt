@@ -1,9 +1,10 @@
 package com.gt.mynews.views.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProviders
@@ -13,7 +14,7 @@ import com.gt.mynews.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_notification.*
 import kotlinx.android.synthetic.main.edit_text_search_query.*
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var viewModel: NotificationViewModel
     private val checkboxes: ArrayList<CheckBox> = arrayListOf()
@@ -42,6 +43,14 @@ class NotificationActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
+    override fun onClick(v: View?) {
+        if (v is CheckBox){
+            if(!isSomeCheckboxChecked()){
+                activity_notifications_switch.isChecked = false
+            }
+        }
+    }
+
     private fun configureToolbar(){
         val toolbar = findViewById<Toolbar>(R.id.activity_toolbar)
 
@@ -57,39 +66,39 @@ class NotificationActivity : AppCompatActivity() {
         val stringKeywordFilter = viewModel.getKeywordFilterSaved()
 
         findViewById<CheckBox>(R.id.fragment_search_checkbox_arts_1).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "arts"
             it.isChecked = stringKeywordFilter.contains("arts")
             checkboxes.add(it)
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_business_2).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "business"
             it.isChecked = stringKeywordFilter.contains("business")
             checkboxes.add(it)
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_entrepreneurs_3).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "entrepreneur"
             it.isChecked = stringKeywordFilter.contains("entrepreneur")
             checkboxes.add(it)
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_politics_4).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "politics"
             it.isChecked = stringKeywordFilter.contains("politics")
             checkboxes.add(it)
 
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_sports_5).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "sports"
             it.isChecked = stringKeywordFilter.contains("sports")
             checkboxes.add(it)
 
         }
         findViewById<CheckBox>(R.id.fragment_search_checkbox_travel_6).let {
-            //it.setOnClickListener(this)
+            it.setOnClickListener(this)
             it.tag = "travel"
             it.isChecked = stringKeywordFilter.contains("travel")
             checkboxes.add(it)
@@ -98,8 +107,21 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun configureSwitchNotif(){
+
         activity_notifications_switch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onNotificationEnabled(isChecked)
+
+            if (viewModel.getKeywordSaved() != "" && isSomeCheckboxChecked()){
+
+                viewModel.onNotificationEnabled(isChecked)
+
+            } else {
+
+                Toast.makeText(this,
+                        getString(R.string.error_keyword_checkboxes),
+                        Toast.LENGTH_SHORT).show()
+
+                activity_notifications_switch.isChecked = false
+            }
         }
 
         activity_notifications_switch.isChecked = viewModel.isSwitchOn()
@@ -113,5 +135,13 @@ class NotificationActivity : AppCompatActivity() {
             val keyword = it.toString()
             viewModel.saveKeyword(keyword)
         }
+    }
+
+    private fun isSomeCheckboxChecked(): Boolean {
+
+        val checkboxesChecked = checkboxes.find {
+            it.isChecked
+        }
+        return checkboxesChecked != null
     }
 }

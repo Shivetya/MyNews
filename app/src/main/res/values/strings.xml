@@ -47,4 +47,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="toolbar_back_button">Navigate up</string>
     <string name="cancel">Cancel</string>
+    <string name="error_keyword_checkboxes">You must enter a keyword and check at least one category !</string>
 </resources>

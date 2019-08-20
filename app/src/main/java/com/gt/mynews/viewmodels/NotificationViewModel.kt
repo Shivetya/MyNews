@@ -1,21 +1,17 @@
 package com.gt.mynews.viewmodels
 
-import android.widget.CheckBox
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.work.*
 import com.gt.mynews.MainApplication
 import com.gt.mynews.notifications.NotificationWorker
 import com.gt.mynews.usecases.ApiSettingsSaveUseCase
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 class NotificationViewModel(private val usecase: ApiSettingsSaveUseCase) : ViewModel() {
 
     companion object{
         const val TAG_NOTIF = "TAG_NOTIF"
     }
-    private val listKeywordFilter: MutableCollection<String> = ArrayList()
 
     fun saveKeyword(keyword: String?){
 
